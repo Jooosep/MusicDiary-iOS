@@ -15,6 +15,7 @@
 		942A151A1FF81B0C00836235 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 942A15181FF81B0C00836235 /* LaunchScreen.storyboard */; };
 		942A15251FF81B0D00836235 /* Musician_s_DiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A15241FF81B0D00836235 /* Musician_s_DiaryTests.swift */; };
 		942A15301FF81B0D00836235 /* Musician_s_DiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A152F1FF81B0D00836235 /* Musician_s_DiaryUITests.swift */; };
+		94B707D61FF82144000CA6E3 /* Teos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B707D51FF82144000CA6E3 /* Teos.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		942A152B1FF81B0D00836235 /* Musician´s DiaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Musician´s DiaryUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		942A152F1FF81B0D00836235 /* Musician_s_DiaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Musician_s_DiaryUITests.swift; sourceTree = "<group>"; };
 		942A15311FF81B0D00836235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94B707D51FF82144000CA6E3 /* Teos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teos.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		942A150C1FF81B0C00836235 /* Musician´s Diary */ = {
 			isa = PBXGroup;
 			children = (
+				94B707D51FF82144000CA6E3 /* Teos.swift */,
 				942A150D1FF81B0C00836235 /* AppDelegate.swift */,
 				942A150F1FF81B0C00836235 /* MasterViewController.swift */,
 				942A15111FF81B0C00836235 /* DetailViewController.swift */,
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94B707D61FF82144000CA6E3 /* Teos.swift in Sources */,
 				942A15121FF81B0C00836235 /* DetailViewController.swift in Sources */,
 				942A15101FF81B0C00836235 /* MasterViewController.swift in Sources */,
 				942A150E1FF81B0C00836235 /* AppDelegate.swift in Sources */,
