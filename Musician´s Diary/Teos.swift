@@ -2,7 +2,7 @@
 //  Teos.swift
 //  MusicDiaryTest
 //
-//  Created by Regina Palatu on 30/12/2017.
+//  Created by Mihkel Märtin on 30/12/2017.
 //  Copyright © 2017 Joosep Teemaa. All rights reserved.
 //
 
@@ -13,6 +13,7 @@ import Foundation
  */
 
 public class Harjutuskord{}
+
 public class Teos: Comparable{
     
     
@@ -37,17 +38,17 @@ public class Teos: Comparable{
             return lhs.nimi < rhs.nimi
         }
     }
-    public static abstract class Teosekirje implements BaseColumns {
-        public static final String TABLE_NAME = "Teos";
-        public static final String COLUMN_NAME_NIMI = "nimi";
-        public static final String COLUMN_NAME_AUTOR = "autor";
-        public static final String COLUMN_NAME_KOMMENTAAR = "kommentaar";
-        public static final String COLUMN_NAME_HINNANG = "hinnang";
-        public static final String COLUMN_NAME_LISATUDPAEVIKUSSE = "lisatudpaevikusse";
-        public static final String COLUMN_NAME_KASUTUSVIIS = "kasutusviis";
+    public class Teosekirje {
+        public static var TABLE_NAME = "Teos";
+        public static var COLUMN_NAME_NIMI = "nimi";
+        public static var COLUMN_NAME_AUTOR = "autor";
+        public static var COLUMN_NAME_KOMMENTAAR = "kommentaar";
+        public static var COLUMN_NAME_HINNANG = "hinnang";
+        public static var COLUMN_NAME_LISATUDPAEVIKUSSE = "lisatudpaevikusse";
+        public static var COLUMN_NAME_KASUTUSVIIS = "kasutusviis";
     }
     
-    public Teos(){
+    public init(){
         setKasutusviis((short) 1);
         setLisatudpaevikusse(Calendar.getInstance().getTime());
     }

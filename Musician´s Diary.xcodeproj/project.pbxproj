@@ -15,7 +15,8 @@
 		942A151A1FF81B0C00836235 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 942A15181FF81B0C00836235 /* LaunchScreen.storyboard */; };
 		942A15251FF81B0D00836235 /* Musician_s_DiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A15241FF81B0D00836235 /* Musician_s_DiaryTests.swift */; };
 		942A15301FF81B0D00836235 /* Musician_s_DiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A152F1FF81B0D00836235 /* Musician_s_DiaryUITests.swift */; };
-		94B707D61FF82144000CA6E3 /* Teos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B707D51FF82144000CA6E3 /* Teos.swift */; };
+		949167081FF8C22400797FFC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 949167071FF8C22400797FFC /* libsqlite3.tbd */; };
+		94FB224D1FF827A8008C5D1D /* Teos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B707D51FF82144000CA6E3 /* Teos.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		942A152B1FF81B0D00836235 /* Musician´s DiaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Musician´s DiaryUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		942A152F1FF81B0D00836235 /* Musician_s_DiaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Musician_s_DiaryUITests.swift; sourceTree = "<group>"; };
 		942A15311FF81B0D00836235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		949167071FF8C22400797FFC /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		94B707D51FF82144000CA6E3 /* Teos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teos.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				949167081FF8C22400797FFC /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +88,7 @@
 				942A15231FF81B0D00836235 /* Musician´s DiaryTests */,
 				942A152E1FF81B0D00836235 /* Musician´s DiaryUITests */,
 				942A150B1FF81B0C00836235 /* Products */,
+				949167061FF8C22400797FFC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,6 +133,14 @@
 				942A15311FF81B0D00836235 /* Info.plist */,
 			);
 			path = "Musician´s DiaryUITests";
+			sourceTree = "<group>";
+		};
+		949167061FF8C22400797FFC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				949167071FF8C22400797FFC /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,7 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94B707D61FF82144000CA6E3 /* Teos.swift in Sources */,
+				94FB224D1FF827A8008C5D1D /* Teos.swift in Sources */,
 				942A15121FF81B0C00836235 /* DetailViewController.swift in Sources */,
 				942A15101FF81B0C00836235 /* MasterViewController.swift in Sources */,
 				942A150E1FF81B0C00836235 /* AppDelegate.swift in Sources */,
