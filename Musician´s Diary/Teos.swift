@@ -39,21 +39,21 @@ public class Teos: Comparable{
         }
     }
     public class Teosekirje {
-        public static var TABLE_NAME = "Teos";
-        public static var COLUMN_NAME_NIMI = "nimi";
-        public static var COLUMN_NAME_AUTOR = "autor";
-        public static var COLUMN_NAME_KOMMENTAAR = "kommentaar";
-        public static var COLUMN_NAME_HINNANG = "hinnang";
-        public static var COLUMN_NAME_LISATUDPAEVIKUSSE = "lisatudpaevikusse";
-        public static var COLUMN_NAME_KASUTUSVIIS = "kasutusviis";
+        public static let TABLE_NAME = "Teos";
+        public static let COLUMN_NAME_NIMI = "nimi";
+        public static let COLUMN_NAME_AUTOR = "autor";
+        public static let COLUMN_NAME_KOMMENTAAR = "kommentaar";
+        public static let COLUMN_NAME_HINNANG = "hinnang";
+        public static let COLUMN_NAME_LISATUDPAEVIKUSSE = "lisatudpaevikusse";
+        public static let COLUMN_NAME_KASUTUSVIIS = "kasutusviis";
     }
     
     public init(){
-        setKasutusviis((short) 1);
-        setLisatudpaevikusse(Calendar.getInstance().getTime());
+        setKasutusviis(kasutusviis: 1);
+        setLisatudpaevikusse(lisatudpaevikusse : Date());
     }
     
-    private void LoadHarjustuskorrad(Context context) {
+    private func LoadHarjustuskorrad(Context context) {
         Harjustuskorrad = new ArrayList<HarjutusKord>();
         Harjutuskorradmap = new HashMap<Integer, HarjutusKord>();
         PilliPaevikDatabase mPPManager = new PilliPaevikDatabase(context);
@@ -134,15 +134,15 @@ public class Teos: Comparable{
     public Date getLisatudpaevikusse() {
         return lisatudpaevikusse;
     }
-    public void setLisatudpaevikusse(Date lisatudpaevikusse) {
-        this.lisatudpaevikusse = lisatudpaevikusse;
+    public func setLisatudpaevikusse(lisatudpaevikusse : Date) {
+        self.lisatudpaevikusse = lisatudpaevikusse;
     }
     
     public short getKasutusviis() {
         return kasutusviis;
     }
-    public void setKasutusviis(short kasutusviis) {
-        this.kasutusviis = kasutusviis;
+    public func setKasutusviis(kasutusviis : CShort) {
+        self.kasutusviis = kasutusviis;
     }
     
     public void Salvesta(Context context){
