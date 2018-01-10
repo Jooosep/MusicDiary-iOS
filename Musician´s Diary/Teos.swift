@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  * Created by mihkel on 2.05.2016.

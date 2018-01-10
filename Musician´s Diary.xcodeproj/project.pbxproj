@@ -17,6 +17,9 @@
 		942A15301FF81B0D00836235 /* Musician_s_DiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A152F1FF81B0D00836235 /* Musician_s_DiaryUITests.swift */; };
 		949167081FF8C22400797FFC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 949167071FF8C22400797FFC /* libsqlite3.tbd */; };
 		94FB224D1FF827A8008C5D1D /* Teos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B707D51FF82144000CA6E3 /* Teos.swift */; };
+		A7EDE9FA20063D94009A5FDE /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EDE9ED20063D35009A5FDE /* SQLite.framework */; };
+		A7EDE9FB20063DB7009A5FDE /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EDE9ED20063D35009A5FDE /* SQLite.framework */; };
+		A7EDE9FC20063DB7009A5FDE /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A7EDE9ED20063D35009A5FDE /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +37,77 @@
 			remoteGlobalIDString = 942A15091FF81B0C00836235;
 			remoteInfo = "Musician´s Diary";
 		};
+		A7EDE9EC20063D35009A5FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE247AD31C3F04ED00AE3E12;
+			remoteInfo = "SQLite iOS";
+		};
+		A7EDE9EE20063D35009A5FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE247ADD1C3F04ED00AE3E12;
+			remoteInfo = "SQLiteTests iOS";
+		};
+		A7EDE9F020063D35009A5FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE247B3C1C3F3ED000AE3E12;
+			remoteInfo = "SQLite Mac";
+		};
+		A7EDE9F220063D35009A5FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE247B451C3F3ED000AE3E12;
+			remoteInfo = "SQLiteTests Mac";
+		};
+		A7EDE9F420063D35009A5FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03A65E5A1C6BB0F50062603F;
+			remoteInfo = "SQLite tvOS";
+		};
+		A7EDE9F620063D35009A5FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03A65E631C6BB0F60062603F;
+			remoteInfo = "SQLiteTests tvOS";
+		};
+		A7EDE9F820063D35009A5FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A121AC451CA35C79005A31D1;
+			remoteInfo = "SQLite watchOS";
+		};
+		A7EDE9FD20063DB7009A5FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = EE247AD21C3F04ED00AE3E12;
+			remoteInfo = "SQLite iOS";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A7EDE9FF20063DB7009A5FDE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A7EDE9FC20063DB7009A5FDE /* SQLite.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		942A150A1FF81B0C00836235 /* Musician´s Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Musician´s Diary.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +126,8 @@
 		942A15311FF81B0D00836235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		949167071FF8C22400797FFC /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		94B707D51FF82144000CA6E3 /* Teos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teos.swift; sourceTree = "<group>"; };
+		A7EDE9DE200638EA009A5FDE /* Musician´s Diary-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Musician´s Diary-Bridging-Header.h"; sourceTree = "<group>"; };
+		A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +135,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7EDE9FA20063D94009A5FDE /* SQLite.framework in Frameworks */,
 				949167081FF8C22400797FFC /* libsqlite3.tbd in Frameworks */,
+				A7EDE9FB20063DB7009A5FDE /* SQLite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +166,8 @@
 				942A152E1FF81B0D00836235 /* Musician´s DiaryUITests */,
 				942A150B1FF81B0C00836235 /* Products */,
 				949167061FF8C22400797FFC /* Frameworks */,
+				A7EDE9DE200638EA009A5FDE /* Musician´s Diary-Bridging-Header.h */,
+				A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,6 +222,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A7EDE9E320063D34009A5FDE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A7EDE9ED20063D35009A5FDE /* SQLite.framework */,
+				A7EDE9EF20063D35009A5FDE /* SQLiteTests iOS.xctest */,
+				A7EDE9F120063D35009A5FDE /* SQLite.framework */,
+				A7EDE9F320063D35009A5FDE /* SQLiteTests Mac.xctest */,
+				A7EDE9F520063D35009A5FDE /* SQLite.framework */,
+				A7EDE9F720063D35009A5FDE /* SQLiteTests tvOS.xctest */,
+				A7EDE9F920063D35009A5FDE /* SQLite.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -153,10 +246,12 @@
 				942A15061FF81B0C00836235 /* Sources */,
 				942A15071FF81B0C00836235 /* Frameworks */,
 				942A15081FF81B0C00836235 /* Resources */,
+				A7EDE9FF20063DB7009A5FDE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A7EDE9FE20063DB7009A5FDE /* PBXTargetDependency */,
 			);
 			name = "Musician´s Diary";
 			productName = "Musician´s Diary";
@@ -211,6 +306,7 @@
 				TargetAttributes = {
 					942A15091FF81B0C00836235 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					942A151F1FF81B0D00836235 = {
@@ -236,6 +332,12 @@
 			mainGroup = 942A15011FF81B0C00836235;
 			productRefGroup = 942A150B1FF81B0C00836235 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A7EDE9E320063D34009A5FDE /* Products */;
+					ProjectRef = A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				942A15091FF81B0C00836235 /* Musician´s Diary */,
@@ -244,6 +346,58 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A7EDE9ED20063D35009A5FDE /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = A7EDE9EC20063D35009A5FDE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A7EDE9EF20063D35009A5FDE /* SQLiteTests iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SQLiteTests iOS.xctest";
+			remoteRef = A7EDE9EE20063D35009A5FDE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A7EDE9F120063D35009A5FDE /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = A7EDE9F020063D35009A5FDE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A7EDE9F320063D35009A5FDE /* SQLiteTests Mac.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SQLiteTests Mac.xctest";
+			remoteRef = A7EDE9F220063D35009A5FDE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A7EDE9F520063D35009A5FDE /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = A7EDE9F420063D35009A5FDE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A7EDE9F720063D35009A5FDE /* SQLiteTests tvOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SQLiteTests tvOS.xctest";
+			remoteRef = A7EDE9F620063D35009A5FDE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A7EDE9F920063D35009A5FDE /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = A7EDE9F820063D35009A5FDE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		942A15081FF81B0C00836235 /* Resources */ = {
@@ -312,6 +466,11 @@
 			isa = PBXTargetDependency;
 			target = 942A15091FF81B0C00836235 /* Musician´s Diary */;
 			targetProxy = 942A152C1FF81B0D00836235 /* PBXContainerItemProxy */;
+		};
+		A7EDE9FE20063DB7009A5FDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SQLite iOS";
+			targetProxy = A7EDE9FD20063DB7009A5FDE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -445,13 +604,17 @@
 		942A15351FF81B0D00836235 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N9G883YSL5;
 				INFOPLIST_FILE = "Musician´s Diary/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vaskjala.vesiroosi20.Musician-s-Diary";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Musician´s Diary-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -460,13 +623,16 @@
 		942A15361FF81B0D00836235 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N9G883YSL5;
 				INFOPLIST_FILE = "Musician´s Diary/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vaskjala.vesiroosi20.Musician-s-Diary";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Musician´s Diary-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
