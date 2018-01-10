@@ -54,10 +54,10 @@ public class Teos: Comparable{
         setLisatudpaevikusse(lisatudpaevikusse : Date());
     }
     
-    private func LoadHarjustuskorrad(Context context) {
-        Harjustuskorrad = new ArrayList<HarjutusKord>();
-        Harjutuskorradmap = new HashMap<Integer, HarjutusKord>();
-        PilliPaevikDatabase mPPManager = new PilliPaevikDatabase(context);
+    private func LoadHarjustuskorrad(/*Context context*/) {
+        var harjutuskorrad = [Harjutuskord]();
+        var harjutuskorradmap = [Int:Harjutuskord]();
+        //PilliPaevikDatabase mPPManager = new PilliPaevikDatabase(context);
         mPPManager.getAllHarjutuskorrad(this.id, this.Harjustuskorrad, this.Harjutuskorradmap);
     }
     

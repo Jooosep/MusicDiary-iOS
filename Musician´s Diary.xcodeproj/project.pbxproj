@@ -20,6 +20,7 @@
 		A7EDE9FA20063D94009A5FDE /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EDE9ED20063D35009A5FDE /* SQLite.framework */; };
 		A7EDE9FB20063DB7009A5FDE /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EDE9ED20063D35009A5FDE /* SQLite.framework */; };
 		A7EDE9FC20063DB7009A5FDE /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A7EDE9ED20063D35009A5FDE /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A7EDEA0120065815009A5FDE /* PilliPaevikDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EDEA0020065815009A5FDE /* PilliPaevikDatabase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,7 @@
 		94B707D51FF82144000CA6E3 /* Teos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teos.swift; sourceTree = "<group>"; };
 		A7EDE9DE200638EA009A5FDE /* Musician´s Diary-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Musician´s Diary-Bridging-Header.h"; sourceTree = "<group>"; };
 		A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
+		A7EDEA0020065815009A5FDE /* PilliPaevikDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilliPaevikDatabase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				942A15161FF81B0C00836235 /* Assets.xcassets */,
 				942A15181FF81B0C00836235 /* LaunchScreen.storyboard */,
 				942A151B1FF81B0C00836235 /* Info.plist */,
+				A7EDEA0020065815009A5FDE /* PilliPaevikDatabase.swift */,
 			);
 			path = "Musician´s Diary";
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7EDEA0120065815009A5FDE /* PilliPaevikDatabase.swift in Sources */,
 				94FB224D1FF827A8008C5D1D /* Teos.swift in Sources */,
 				942A15121FF81B0C00836235 /* DetailViewController.swift in Sources */,
 				942A15101FF81B0C00836235 /* MasterViewController.swift in Sources */,
