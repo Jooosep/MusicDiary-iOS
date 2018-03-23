@@ -7,23 +7,23 @@
 //
 
 import UIKit
-import SQLite3
+import SQLite
 
-public class PilliPaevikDatabase: NSObject {
+public class PilliPaevikDatabase: UIViewController {
     
     // Sünkroniseerimiseks
-    public static let sPilliPaevikuLukk = object();
+    //public static let sPilliPaevikuLukk = object();
     
-    private Context context;
+    
     
     // Logcat tag
-    private static final String LOG = "PilliPaevikDatabase";
+    private static let LOG = "PilliPaevikDatabase";
     // Database Version
-    private static final int DATABASE_VERSION = 8;
+    private static let DATABASE_VERSION = 8;
     // Database Name
-    public static final String DATABASE_NAME = "PilliPaevik";
+    public static let DATABASE_NAME = "PilliPaevik";
     
-    private static final String CREATE_TABLE_TEOS = "CREATE TABLE " + Teos.Teosekirje.TABLE_NAME + "(" +
+    private static let CREATE_TABLE_TEOS = "CREATE TABLE " + Teos.Teosekirje.TABLE_NAME + "(" +
     Teos.Teosekirje._ID + " INTEGER PRIMARY KEY," +
     Teos.Teosekirje.COLUMN_NAME_NIMI + " TEXT," +
     Teos.Teosekirje.COLUMN_NAME_AUTOR + " TEXT," +
@@ -59,8 +59,12 @@ public class PilliPaevikDatabase: NSObject {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
     this.context = context;
     }
+    let db = try Connection("path/to/db.sqlite3");
     
-    @Override
+    override public func viewDidLoad(){
+        super.viewDidLoad();
+        
+    }
     public void onCreate(SQLiteDatabase db) {
     
     try {

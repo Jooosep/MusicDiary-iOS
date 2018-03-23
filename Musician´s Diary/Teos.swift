@@ -54,7 +54,7 @@ public class Teos: Comparable{
         setLisatudpaevikusse(lisatudpaevikusse : Date());
     }
     
-    private func LoadHarjustuskorrad(/*Context context*/) {
+    private func LoadHarjustuskorrad() {
         var harjutuskorrad = [Harjutuskord]();
         var harjutuskorradmap = [Int:Harjutuskord]();
         //PilliPaevikDatabase mPPManager = new PilliPaevikDatabase(context);
