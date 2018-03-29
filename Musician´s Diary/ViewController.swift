@@ -10,38 +10,44 @@ import UIKit
 import SQLite
 
 //MARK Properties
-class ViewController: UIViewController {
+class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    var database: Connection!;
+    var teosed = ["Yesterday", "testlugu","jne"];
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return teosed.count;
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView1.dequeueReusableCell(withIdentifier: "customCell") as!
+        TableViewCell1
+        cell.label.text = teosed[indexPath.row]
+        return cell;
+    }
+    
+    
     let teosTable = Table("teosed");
     let id = Expression<Int>("id");
     let name = Expression<String>("name");
     let author = Expression<String>("author");
     
+    @IBOutlet weak var tableView1: UITableView!
+    
     override func viewDidLoad() {
+        tableView1.delegate = self
+        tableView1.dataSource = self
+        
+        let dbManager = PilliPaevikDatabase();
+        dbManager.create_db();
+        dbManager.create_tables();
+        
         super.viewDidLoad();
-        do{
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true);
-            let fileUrl = documentDirectory.appendingPathComponent("users").appendingPathExtension("sqlite3");
-            let database = try Connection(fileUrl.path);
-            self.database = database;
-        }
-        catch{
-            print(error)
-        }
+        
     }
     @IBAction func OnActionTapped(_ sender: Any) {
-        let createTable = self.teosTable.create{(table) in
-            table.column(self.id,primaryKey: true)
-            table.column(self.name)
-            table.column(self.author)
-        }
-        do{
-            try self.database.run(createTable)
-            print("Created table")
-        }catch{
-            print(error);
-        }
         let alert = UIAlertController(title:"New Song",message:"fill in the information of you're new song",preferredStyle: .alert);
         let action1 = UIAlertAction(title: "Cancel",style:.cancel, handler:nil);
         let action2 = UIAlertAction(title: "Submit",style:.default, handler:nil);
