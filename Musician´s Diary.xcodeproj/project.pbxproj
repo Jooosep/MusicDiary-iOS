@@ -199,13 +199,13 @@
 				A7A00731206AEECE00AD6914 /* ViewController.swift */,
 				A778D2AB20695C9100F54E65 /* SecondViewController.swift */,
 				A7A4D544206FA7B5002B6AE8 /* ThirdViewController.swift */,
+				A7906EBF2073790300E1A8F3 /* FourthViewController.swift */,
 				94B707D51FF82144000CA6E3 /* Teos.swift */,
 				942A15161FF81B0C00836235 /* Assets.xcassets */,
 				942A151B1FF81B0C00836235 /* Info.plist */,
 				A7EDEA0020065815009A5FDE /* PilliPaevikDatabase.swift */,
 				A797CB17206D4A460049CBD6 /* TableViewCell1.swift */,
 				A7A4D53C206FA670002B6AE8 /* TableViewCell2.swift */,
-				A7906EBF2073790300E1A8F3 /* FourthViewController.swift */,
 			);
 			path = "Musician´s Diary";
 			sourceTree = "<group>";

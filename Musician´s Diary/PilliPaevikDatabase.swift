@@ -33,20 +33,29 @@ public class PilliPaevikDatabase {
     
     public func selectField(pos: Int) -> [String] {
         var stringy = [String]()
-        let posy = pos + 1
+        if database != nil{
          do{
-            for user in try database.prepare(teosTable.select(name,author,comment).filter(id == posy)){
+            for user in try database.prepare(teosTable.select(name,author,comment).filter(id == pos)){
                 
                 stringy = ["\(String(user[name]))","\(String(user[author]))","\(String(user[comment]))"]
+                print("\(String(user[name]))")
+                print("\(String(user[author]))")
+                print("\(String(user[comment]))")
             }
          }
+        
          catch{
             print(error)
+        }
+        }
+        else{
+            print("db is nil error")
         }
         return stringy
     }
     public func listTable(){
         do{
+            print("Listing current Teos table")
             let teosTable = try self.database.prepare(self.teosTable)
             for user in teosTable {
                 print( "id: \(user[self.id]), name: \(user[self.name]), author: \(user[self.author])")
@@ -69,9 +78,22 @@ public class PilliPaevikDatabase {
     public func newTeosRow(){
         do{
             try database.run(teosTable.insert())
+            print("newrow")
         }catch{
             print(error)
         }
+    }
+    
+    public func tableOrder(table: Table)-> [Int]{
+        var idTable = [Int]()
+        do{
+            for user in try database.prepare(table.select(id)){
+                idTable.append(user[id])
+            }
+        }catch{
+            print(error)
+        }
+        return idTable
     }
     
     public func updateTeosRow(name:String,author:String,comment:String){
@@ -84,6 +106,7 @@ public class PilliPaevikDatabase {
         let newRow = teosTable.filter(id == max)
         do{
             try database.run(newRow.update(self.name <- name, self.author <- author, self.comment <- comment))
+            print("newname: " + name)
         }catch{
             print(error)
         }
@@ -104,6 +127,7 @@ public class PilliPaevikDatabase {
             let fileUrl = documentDirectory.appendingPathComponent("users").appendingPathExtension("sqlite3");
             let db = try Connection(fileUrl.path);
             self.database = db;
+            print("connected to tb")
         }
         catch{
             print(error)

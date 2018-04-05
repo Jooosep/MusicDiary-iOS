@@ -12,7 +12,6 @@ class ThirdViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 
     @IBOutlet weak var tableView3: UITableView!
 
-    var dbManager = PilliPaevikDatabase();
     var chosenTeos:Int!
     var chosenId:Int!
     var nameCell : TableViewCell2!
@@ -46,7 +45,7 @@ class ThirdViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         if indexPath.row == 0 {
             cell.textField1.font = .systemFont(ofSize: 18)
         }
-        cell.textField1.text = dbManager.selectField(pos: chosenTeos)[indexPath.row]
+        cell.textField1.text = ViewController.dbManager.selectField(pos: chosenId)[indexPath.row]
 
         return cell;
     }
@@ -54,19 +53,19 @@ class ThirdViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @objc func nameFieldChange(){
 
-        dbManager.editTeosRow(targetId: chosenId, field: dbManager.name, value: nameCell.textField1.text!)
+        ViewController.dbManager.editTeosRow(targetId: chosenId, field: ViewController.dbManager.name, value: nameCell.textField1.text!)
         print("edited name")
         
     }
     @objc func authorFieldChange(){
         
-        dbManager.editTeosRow(targetId: chosenId, field: dbManager.author, value: authorCell.textField1.text!)
+        ViewController.dbManager.editTeosRow(targetId: chosenId, field: ViewController.dbManager.author, value: authorCell.textField1.text!)
         print("edited author")
         
     }
     @objc func commentFieldChange(){
         
-        dbManager.editTeosRow(targetId: chosenId, field: dbManager.comment, value: commentCell.textField1.text!)
+        ViewController.dbManager.editTeosRow(targetId: chosenId, field: ViewController.dbManager.comment, value: commentCell.textField1.text!)
         print("edited comment")
         
     }
@@ -91,6 +90,14 @@ class ThirdViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let destination = segue.destination as? FourthViewController{
+            destination.chosenTeos = self.chosenTeos
+            destination.chosenId = self.chosenId
+        }
     }
     
     override func didReceiveMemoryWarning() {
