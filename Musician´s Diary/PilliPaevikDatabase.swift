@@ -17,6 +17,8 @@ public class PilliPaevikDatabase {
     // Database Version
     private static let DATABASE_VERSION = 8;
     
+    static var dbManager = PilliPaevikDatabase();
+    
     //Teos
     let teosTable = Table("teosed");
     let id = Expression<Int>("id");
@@ -28,8 +30,18 @@ public class PilliPaevikDatabase {
     let algusaeg = Expression<Date>("algusaeg");
     let pikkus = Expression<Int>("pikkusSekundites");
     let lopuaeg = Expression<Date>("lopuaeg");
+    let lisatudPaevikusse = Expression<Date>("lisatudPaevikusse");
+    let harjutuseKirjeldus = Expression<String>("harjutuseKirjeldus");
+    let teoseId = Expression<Int>("teoseId")
+    
     
     var database : Connection!;
+    var dateFormatter = DateFormatter()
+
+    private func dateToStr(date: Date) -> String{
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+        return dateFormatter.string(from: date)
+    }
     
     public func selectField(pos: Int) -> [String] {
         var stringy = [String]()
@@ -63,12 +75,30 @@ public class PilliPaevikDatabase {
         }catch{
             
         }
+        do{
+            print("Listing current hk table")
+            let harjutuskordTable = try self.database.prepare(self.harjutuskordTable)
+            for user in harjutuskordTable {
+                print( "id: \(user[self.id]),algusaeg: \(user[self.algusaeg]), pikkus: \(user[self.pikkus]), lopuaeg: \(user[self.lopuaeg]), teosID: \(user[self.teoseId])")
+            }
+        }catch{
+            
+        }
     }
     
     public func rowCount(table: Table) -> Int{
         var rowCount : Int!
         do{
             rowCount = try database.scalar(table.count)
+        }catch{
+            print(error)
+        }
+        return rowCount
+    }
+    public func rowCountForId(targetId : Int,table: Table) -> Int{
+        var rowCount : Int!
+        do{
+            rowCount = try database.scalar(table.count.filter(teoseId == targetId))
         }catch{
             print(error)
         }
@@ -84,6 +114,17 @@ public class PilliPaevikDatabase {
         }
     }
     
+    public func newHarjutuskordRow(teosId : Int)->Int64{
+        var rowID : Int64!
+        do{
+            rowID = try database.run(harjutuskordTable.insert(lisatudPaevikusse <- Date(),teoseId <- teosId))
+            print("new practiceRow")
+        }catch{
+            print(error)
+        }
+        return rowID
+    }
+    
     public func tableOrder(table: Table)-> [Int]{
         var idTable = [Int]()
         do{
@@ -94,6 +135,32 @@ public class PilliPaevikDatabase {
             print(error)
         }
         return idTable
+    }
+    public func tableOrderByDate(table: Table,teosId : Int)-> [Int]{
+        var idTable = [Int]()
+        do{
+            for user in try database.prepare(table.select(id).filter(teoseId == teosId).order(algusaeg.desc)){
+                idTable.append(user[id])
+            }
+        }catch{
+            print(error)
+        }
+        return idTable
+    }
+    public func tableNewRowPosition(table: Table,teosId : Int, newHarjutusId : Int)-> Int{
+        var idTable = [Int]()
+        do{
+            for user in try database.prepare(table.select(id).filter(teoseId == teosId).order(algusaeg.desc)){
+                if user[id] == newHarjutusId
+                {
+                    return idTable.count
+                }
+                idTable.append(user[id])
+            }
+        }catch{
+            print(error)
+        }
+        return 0
     }
     
     public func updateTeosRow(name:String,author:String,comment:String){
@@ -112,10 +179,57 @@ public class PilliPaevikDatabase {
         }
     }
     
+    
+    public func selectHarjutuskordRow(pos: Int) -> [String] {
+        var stringy = [String]()
+        if database != nil{
+            do{
+                for user in try database.prepare(harjutuskordTable.select(algusaeg,pikkus,lopuaeg,harjutuseKirjeldus,lisatudPaevikusse).filter(id == pos)){
+                    
+                    stringy = ["\(String(dateToStr(date: user[algusaeg])))","\(String(user[pikkus]))","\(String(dateToStr(date: user[lopuaeg])))","\(String(user[harjutuseKirjeldus]))","\(String(dateToStr(date: user[lisatudPaevikusse])))"]
+                }
+            }
+                
+            catch{
+                print(error)
+            }
+        }
+        else{
+            print("db is nil error")
+        }
+        return stringy
+    }
     public func editTeosRow(targetId : Int, field : Expression<String>,value : String){
         let editRow = teosTable.filter(id == targetId)
         do{
             try database.run(editRow.update(field <- value))
+        }catch{
+            print(error)
+        }
+    }
+    
+    public func editHarjutuskordTime(practiceId : Int64, startTime : Date, duration : Int, endTime : Date ){
+        do{
+            let editRow = harjutuskordTable.filter(id == Int(practiceId))
+            try database.run(editRow.update(self.algusaeg <- startTime, self.pikkus <- duration, self.lopuaeg <- endTime))
+        }catch{
+            print(error)
+        }
+    }
+    
+    public func editHarjutuskordDescription(practiceId : Int64, description : String){
+        
+        do{
+            let editRow = harjutuskordTable.filter(id == Int(practiceId))
+            try database.run(editRow.update(self.harjutuseKirjeldus <- description))
+        }catch{
+            print(error)
+        }
+    }
+    public func harjutuskordDeleteWhereDurationZero(teosId:Int){
+        do{
+            let row = harjutuskordTable.filter(teoseId == teosId && pikkus == 0)
+            try database.run(row.delete())
         }catch{
             print(error)
         }
@@ -158,10 +272,13 @@ public class PilliPaevikDatabase {
         }
         
         let createHarjutuskordTable = self.harjutuskordTable.create{(table) in
-            table.column(self.id,primaryKey: true)
-            table.column(self.algusaeg)
-            table.column(self.pikkus)
-            table.column(self.lopuaeg)
+            table.column(self.id,primaryKey: .autoincrement)
+            table.column(self.algusaeg, defaultValue: Date())
+            table.column(self.pikkus,defaultValue:0)
+            table.column(self.lopuaeg,defaultValue:Date())
+            table.column(self.harjutuseKirjeldus,defaultValue: "practice")
+            table.column(self.lisatudPaevikusse)
+            table.column(self.teoseId, references: teosTable, id)
         }
         do{
             try self.database.run(createHarjutuskordTable)

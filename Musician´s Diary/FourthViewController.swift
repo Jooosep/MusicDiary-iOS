@@ -8,61 +8,79 @@
 
 import UIKit
 
-class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelegate {
+class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate {
     
-
-    @IBOutlet weak var popUpView: UIView!
-    
-    var chosenTeos:Int!
-    var chosenId:Int!
+    //lets
+    let dateFormatter = DateFormatter()
     
     let alert = UIAlertController(title:"Alert",message:"Unable to pick future time",preferredStyle: .alert);
     let dismiss = UIAlertAction(title: "OK",style:.cancel, handler:nil);
     
-    //0 for start, 1 for end, 2 for duration
-    var beingConfigured : Int!
+    let configuringStart = 0
+    let configuringEnd = 1
+    let configuringDuration = 2
+    
+    
+    //vars
+    var db = PilliPaevikDatabase.dbManager
+    
+    var chosenId : Int!
+    var harjutusId : Int64!
     
     var currentDate = Date()
     var endDate = Date()
     var startDate = Date()
-
+    
     var pickerDataSize = 0
     var pickerMax = 0
     
+    var beingConfigured : Int!
     
-    let dateFormatter = DateFormatter()
-    
+
+    //MARK:IBOutlets
+    @IBOutlet weak var popUpView: UIView!
     @IBOutlet weak var startTimePicker: UIButton!
     @IBOutlet weak var endTimePicker: UIButton!
     @IBOutlet weak var durationPicker: UIButton!
+    @IBOutlet weak var backGroundButton: UIButton!
     
+    @IBOutlet weak var practiceDescription: UITextField!
     
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var pickerView: UIPickerView!
     
+    @IBOutlet weak var datePickerCenterConstraint: NSLayoutConstraint!
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerMax + 1 + pickerDataSize
-    }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerMax > 25{
-            return String(row%(pickerMax + 1))
-        }
-        else{
-            return String(row)
-        }
+    //MARK:IBActions
+    @IBAction func descriptionChanged(_ sender: Any) {
+        db.editHarjutuskordDescription(practiceId : harjutusId, description: practiceDescription.text!)
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerMax > 25{
-            durationPicker.setTitle(String(row%pickerMax), for: durationPicker.state)
-        }
-        else{
-            durationPicker.setTitle(String(row), for: durationPicker.state)
-        }
+    @IBAction func startTimePickerTapped(_ sender: Any) {
+        beingConfigured = 0
+        datePicker.date = startDate
+        datePickerCenterConstraint.constant = 0
+        UIView.animate(withDuration: 0.3, animations: {self.view.layoutIfNeeded()
+            self.backGroundButton.alpha = 0.5
+        })
+    }
+    
+    @IBAction func endTimePickerTapped(_ sender: Any) {
+        beingConfigured = 1
+        datePicker.date = endDate
+        datePickerCenterConstraint.constant = 0
+        UIView.animate(withDuration: 0.3, animations: {self.view.layoutIfNeeded()
+            self.backGroundButton.alpha = 0.5
+        })
+    }
+    
+    @IBAction func durationPickerTapped(_ sender: Any) {
+        datePicker.alpha = 0
+        pickerView.alpha = 1
+        beingConfigured = 2
+        datePickerCenterConstraint.constant = 0
+        UIView.animate(withDuration: 0.3, animations: {self.view.layoutIfNeeded()
+            self.backGroundButton.alpha = 0.5})
     }
     
     @IBAction func cancelTapped(_ sender: Any) {
@@ -81,6 +99,9 @@ class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerView
             }
             else if datePicker.date > endDate{
                 startDate = datePicker.date
+                print(startDate)
+                print(">")
+                print(endDate)
                 endDate = datePicker.date
                 startTimePicker.setTitle(dateFormatter.string(from: endDate), for: endTimePicker.state)
                 endTimePicker.setTitle(dateFormatter.string(from: endDate), for: endTimePicker.state)
@@ -112,7 +133,9 @@ class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerView
             datePicker.alpha = 1
         }
         
-        pickerMax = (Int(ceil(endDate.timeIntervalSince(startDate)/60.0)))
+        pickerMax = (Int(round((endDate.timeIntervalSince(startDate)/60.0))))
+        print("pickermax")
+        print(pickerMax)
  
         if (pickerMax > 25){
             pickerDataSize = 100_000
@@ -130,48 +153,67 @@ class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerView
             self.backGroundButton.alpha = 0
             
         })
+        db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: (pickerMax)*60, endTime: endDate)
+        print("edited duration")
+        print(Int((durationPicker.titleLabel?.text)!)!*60)
     }
     
-    @IBOutlet weak var backGroundButton: UIButton!
-    @IBOutlet weak var datePickerCenterConstraint: NSLayoutConstraint!
-    
-    @IBAction func startTimePickerTapped(_ sender: Any) {
-        beingConfigured = 0
-        datePicker.date = startDate
-        datePickerCenterConstraint.constant = 0
-        UIView.animate(withDuration: 0.3, animations: {self.view.layoutIfNeeded()
-            self.backGroundButton.alpha = 0.5
-        })
-    }
-    
-    @IBAction func endTimePickerTapped(_ sender: Any) {
-        beingConfigured = 1
-        datePicker.date = endDate
-        datePickerCenterConstraint.constant = 0
-        UIView.animate(withDuration: 0.3, animations: {self.view.layoutIfNeeded()
-            self.backGroundButton.alpha = 0.5
-        })
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 
-    @IBAction func durationPickerTapped(_ sender: Any) {
-        datePicker.alpha = 0
-        pickerView.alpha = 1
-        beingConfigured = 2
-        datePickerCenterConstraint.constant = 0
-        UIView.animate(withDuration: 0.3, animations: {self.view.layoutIfNeeded()
-            self.backGroundButton.alpha = 0.5})
+    
+    //MARK:pickerview
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
     
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerMax + 1 + pickerDataSize
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerMax > 25{
+            print(row%pickerMax)
+            return String(row%(pickerMax))
+        }
+        else{
+            return String(row)
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerMax > 25{
+            durationPicker.setTitle(String(row%pickerMax), for: durationPicker.state)
+        }
+        else{
+            durationPicker.setTitle(String(row), for: durationPicker.state)
+        }
+    }
+    
+    @objc func handleSingleTap(){
+        self.view.endEditing(true)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let tapper = UITapGestureRecognizer(target: self, action: #selector(ThirdViewController.handleSingleTap))
+        tapper.cancelsTouchesInView = false
+        print("chosenId: ")
+        print(chosenId)
+        harjutusId = db.newHarjutuskordRow(teosId: chosenId)
+        ThirdViewController.newHarjutusId = Int(harjutusId)
+        ThirdViewController.shouldAnimateFirstRow = true
+        print("created new harjutuskord row")
+        
         alert.addAction(dismiss);
         
         pickerView.delegate = self
         pickerView.dataSource = self
         popUpView.layer.cornerRadius = 10
         popUpView.layer.masksToBounds = true
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.dateFormat = "yyyy-MM-dd    HH:mm"
         startTimePicker.setTitle(dateFormatter.string(from: startDate), for: startTimePicker.state)
         endTimePicker.setTitle(dateFormatter.string(from: endDate), for: endTimePicker.state)
         durationPicker.setTitle("0", for: durationPicker.state)
@@ -181,14 +223,7 @@ class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let destination = segue.destination as? ThirdViewController{
-            destination.chosenTeos = self.chosenTeos
             destination.chosenId = self.chosenId
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 }

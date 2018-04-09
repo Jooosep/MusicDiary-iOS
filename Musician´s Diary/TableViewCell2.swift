@@ -18,9 +18,6 @@ import UIKit
 
 class TableViewCell2: UITableViewCell, UITextFieldDelegate {
     
-    var chosenTeos:Int!
-    var chosenId:Int!
-    var dbManager = PilliPaevikDatabase();
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var textField1: UITextField!
     

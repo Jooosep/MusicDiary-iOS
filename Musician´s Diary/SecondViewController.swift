@@ -10,6 +10,7 @@ import UIKit
 
 class SecondViewController: UIViewController {
 
+    var db = PilliPaevikDatabase.dbManager
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +18,7 @@ class SecondViewController: UIViewController {
         author.delegate = self
         songComment.delegate = self
         
-        ViewController.dbManager.newTeosRow()
+        self.db.newTeosRow()
         // Do any additional setup after loading the view.
     }
 
@@ -32,7 +33,7 @@ class SecondViewController: UIViewController {
         songName.resignFirstResponder()
         author.resignFirstResponder()
         songComment.resignFirstResponder()
-        ViewController.dbManager.updateTeosRow(name: songName.text!, author: author.text!, comment: songComment.text!)
+        db.updateTeosRow(name: songName.text!, author: author.text!, comment: songComment.text!)
     }
     @IBOutlet weak var songName: UITextField!
     
@@ -43,7 +44,7 @@ class SecondViewController: UIViewController {
 extension SecondViewController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        ViewController.dbManager.updateTeosRow(name: songName.text!, author: author.text!, comment: songComment.text!)
+        db.updateTeosRow(name: songName.text!, author: author.text!, comment: songComment.text!)
         return true
     }
 }

@@ -12,12 +12,13 @@ import SQLite
 //MARK Properties
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    static var dbManager = PilliPaevikDatabase();
+    var db = PilliPaevikDatabase.dbManager
     static var justOpened : Bool!
+    @IBOutlet weak var tableView1: UITableView!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(ViewController.dbManager.rowCount(table:ViewController.dbManager.teosTable))
-        return ViewController.dbManager.rowCount(table:ViewController.dbManager.teosTable)
+        print(db.rowCount(table:db.teosTable))
+        return db.rowCount(table:db.teosTable)
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -27,28 +28,51 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView1.dequeueReusableCell(withIdentifier: "customCell") as!
         TableViewCell1
-        cell.label.text = ViewController.dbManager.selectField(pos:ViewController.dbManager.tableOrder(table: ViewController.dbManager.teosTable)[ViewController.dbManager.rowCount(table:ViewController.dbManager.teosTable) - indexPath.row - 1])[0]
+        cell.cellView.backgroundColor = UIColor(named: "cellBlue")
+        cell.label.text = db.selectField(pos:db.tableOrder(table: db.teosTable)[db.rowCount(table:db.teosTable) - indexPath.row - 1])[0]
         return cell;
     }
 
 
-    @IBOutlet weak var tableView1: UITableView!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let destination = segue.destination as? ThirdViewController{
-            destination.chosenId = ViewController.dbManager.tableOrder(table:ViewController.dbManager.teosTable ) [ViewController.dbManager.rowCount(table:ViewController.dbManager.teosTable) - (tableView1.indexPathForSelectedRow?.row)! - 1]
+            destination.chosenId = db.tableOrder(table:db.teosTable ) [db.rowCount(table:db.teosTable) - (tableView1.indexPathForSelectedRow?.row)! - 1]
+            print("teos id:")
+            print(db.tableOrder(table:db.teosTable ) [db.rowCount(table:db.teosTable) - (tableView1.indexPathForSelectedRow?.row)! - 1])
         }
     }
+    func animateTable(){
+        tableView1.reloadData()
+        let cells = tableView1.visibleCells
+        let tableHeight: CGFloat = tableView1.bounds.size.height
+        
+        for i in cells{
+            let cell : UITableViewCell = i
+            cell.transform = CGAffineTransform(translationX: 0, y: tableHeight)
+        }
+        var index = 0
+        
+        for a in cells {
+            let cell: UITableViewCell = a
+            UIView.animate(withDuration: 1.0, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options:[], animations: {cell.transform = CGAffineTransform(translationX: 0, y: 0)}, completion: nil)
+            index += 1
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
     
+        super.viewWillAppear(animated)
+        animateTable()
+    }
     override func viewDidLoad() {
         
         if ViewController.justOpened == true || ViewController.justOpened == nil{
-            ViewController.dbManager.create_db()
+            db.create_db()
             ViewController.justOpened = false
         }
         if !UserDefaults.standard.bool(forKey: "firstOpen"){
-            ViewController.dbManager.create_tables();
+            db.create_tables();
             UserDefaults.standard.register(defaults: ["firstOpen" : true])
             UserDefaults.standard.set(true, forKey: "firstOpen")
             print("opened app for first time")
@@ -66,7 +90,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         alert.addAction(action1);
         alert.addAction(action2);
         present(alert,animated: true,completion: nil);
-        ViewController.dbManager.listTable()
+        db.listTable()
     }
 
 
@@ -76,7 +100,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             print("this is action 1")
         };
         let action2 = UIAlertAction(title: "clear table",style:.default){(action)in
-            ViewController.dbManager.clear_table()
+            self.db.clear_table()
             DispatchQueue.main.async {
                 self.tableView1.reloadData()
             }

@@ -16,6 +16,9 @@ class MasterViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let barButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(MasterViewController.OKTapped(_:)))
+            
+        self.navigationItem.setRightBarButtonItems([barButton,barButton], animated: false)
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
 
@@ -27,6 +30,11 @@ class MasterViewController: UITableViewController {
         }
     }
 
+    @objc func OKTapped(_ sender: Any)
+        {
+            print("ok")
+        }
+    
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
