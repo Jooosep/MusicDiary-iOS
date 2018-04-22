@@ -108,7 +108,7 @@ open class rippleButton: UIButton {
         }
         
         UIView.animate(withDuration: 0.1, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
-            self.rippleBackgroundView.alpha = 1
+            self.rippleBackgroundView.alpha = 0.8
         }, completion: nil)
         
         rippleView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)

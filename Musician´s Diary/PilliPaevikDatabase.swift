@@ -33,6 +33,7 @@ public class PilliPaevikDatabase {
     let lisatudPaevikusse = Expression<Date>("lisatudPaevikusse");
     let harjutuseKirjeldus = Expression<String>("harjutuseKirjeldus");
     let teoseId = Expression<Int>("teoseId")
+    let helifail = Expression<String>("helifail")
     
     
     var database : Connection!;
@@ -105,13 +106,15 @@ public class PilliPaevikDatabase {
         return rowCount
     }
     
-    public func newTeosRow(){
+    public func newTeosRow() -> Int{
+        var rowId: Int64!
         do{
-            try database.run(teosTable.insert())
+            rowId = try database.run(teosTable.insert())
             print("newrow")
         }catch{
             print(error)
         }
+        return  Int(rowId)
     }
     
     public func newHarjutuskordRow(teosId : Int)->Int64{
@@ -125,16 +128,26 @@ public class PilliPaevikDatabase {
         return rowID
     }
     
-    public func tableOrder(table: Table)-> [Int]{
+    public func tableOrder(table: Table)-> [[Int]]{
         var idTable = [Int]()
+        var countTable = [Int]()
+        var durationTable = [Int]()
+        var totalDuration = 0
         do{
-            for user in try database.prepare(table.select(id)){
+            if database == nil{print("nilll")}
+            for user in try database.prepare(table.select(id).order(id.desc)){
                 idTable.append(user[id])
+                countTable.append(try database.scalar(harjutuskordTable.filter(teoseId == user[id]).count))
+                for user in try database.prepare(harjutuskordTable.filter(teoseId == user[id])){
+                    totalDuration += user[pikkus]
+                }
+                durationTable.append(totalDuration)
+                totalDuration = 0
             }
         }catch{
             print(error)
         }
-        return idTable
+        return [idTable, countTable, durationTable]
     }
     public func tableOrderByDate(table: Table,teosId : Int)-> [Int]{
         var idTable = [Int]()
@@ -147,6 +160,43 @@ public class PilliPaevikDatabase {
         }
         return idTable
     }
+    public func durationByDay(date : Date) -> [Int]{
+        var duration = 0
+        var count = 0
+        do{
+            for user in try database.prepare(harjutuskordTable.select(pikkus).filter(algusaeg >= date.startOfDay && algusaeg <= date.endOfDay)){
+                duration += user[pikkus]
+                count += 1
+            }
+        }catch{
+            print(error)
+        }
+        return [duration,count]
+    }
+    
+    public func totalDurations() -> [Int]{
+        var dayDuration = 0
+        var weekDuration = 0
+        var monthDuration = 0
+        do{
+            for user in try database.prepare(harjutuskordTable.select(pikkus).filter(algusaeg >= Date().startOfDay))
+            {
+                dayDuration += user[pikkus]
+            }
+            for user in try database.prepare(harjutuskordTable.select(pikkus).filter(algusaeg >= Date().startOfWeek))
+            {
+                weekDuration += user[pikkus]
+            }
+            for user in try database.prepare(harjutuskordTable.select(pikkus).filter(algusaeg >= Date().startOfMonth))
+            {
+                monthDuration += user[pikkus]
+            }
+        }catch{
+            print(error)
+        }
+        return [dayDuration, weekDuration, monthDuration]
+    }
+ 
     public func tableNewRowPosition(table: Table,teosId : Int, newHarjutusId : Int)-> Int{
         var idTable = [Int]()
         do{
@@ -199,6 +249,32 @@ public class PilliPaevikDatabase {
         }
         return stringy
     }
+    
+    public func returnHarjutusId(teosId: Int,pos: Int) -> Int {
+        var idTable = [Int]()
+        do{
+            for user in try database.prepare(harjutuskordTable.select(id).filter(teoseId == teosId).order(algusaeg.desc)){
+                idTable.append(user[id])
+            }
+        }catch{
+            print(error)
+        }
+        return idTable[pos]
+    }
+    
+    public func returnHarjutusFilePath(harjutusId: Int) -> String{
+        var filepath: String!
+        do{
+            for user in try database.prepare(harjutuskordTable.select(helifail).filter(id == harjutusId)) {
+                filepath = user[helifail]
+                print("valitud heifail:")
+                print(filepath)
+            }
+        }catch{
+            print(error)
+        }
+        return filepath
+    }
     public func editTeosRow(targetId : Int, field : Expression<String>,value : String){
         let editRow = teosTable.filter(id == targetId)
         do{
@@ -208,10 +284,10 @@ public class PilliPaevikDatabase {
         }
     }
     
-    public func editHarjutuskordTime(practiceId : Int64, startTime : Date, duration : Int, endTime : Date ){
+    public func editHarjutuskordTime(practiceId: Int64, startTime: Date, duration: Int, endTime: Date , filename: String = ""){
         do{
             let editRow = harjutuskordTable.filter(id == Int(practiceId))
-            try database.run(editRow.update(self.algusaeg <- startTime, self.pikkus <- duration, self.lopuaeg <- endTime))
+            try database.run(editRow.update(self.algusaeg <- startTime, self.pikkus <- duration, self.lopuaeg <- endTime, self.helifail <- filename))
         }catch{
             print(error)
         }
@@ -279,6 +355,7 @@ public class PilliPaevikDatabase {
             table.column(self.harjutuseKirjeldus,defaultValue: "practice")
             table.column(self.lisatudPaevikusse)
             table.column(self.teoseId, references: teosTable, id)
+            table.column(self.helifail,defaultValue:"")
         }
         do{
             try self.database.run(createHarjutuskordTable)

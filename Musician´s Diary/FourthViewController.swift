@@ -198,6 +198,8 @@ class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        ThirdViewController.enteringFromLeft = false
+        
         let tapper = UITapGestureRecognizer(target: self, action: #selector(ThirdViewController.handleSingleTap))
         tapper.cancelsTouchesInView = false
         print("chosenId: ")

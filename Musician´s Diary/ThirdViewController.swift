@@ -24,6 +24,7 @@ class ThirdViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var commentCell : TableViewCell2!
     var tableRowHeight : Int!
     static var shouldAnimateFirstRow = false
+    static var enteringFromLeft = true
     
     @IBOutlet weak var startPracticeBtn: UIBarButtonItem!
     @IBOutlet weak var tableView4: UITableView!
@@ -53,7 +54,18 @@ class ThirdViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     fileprivate func animateIn(cell: UITableViewCell, withDelay delay: TimeInterval) {
         let initialScale: CGFloat = 1.2
-        let duration: TimeInterval = 0.5
+        let duration: TimeInterval = 0.7
+        
+        cell.alpha = 0.0
+        cell.layer.transform = CATransform3DMakeScale(initialScale, initialScale, 1)
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            cell.alpha = 1.0
+            cell.layer.transform = CATransform3DIdentity
+        }, completion: nil)
+    }
+    fileprivate func animateIn2(cell: UITableViewCell, withDelay delay: TimeInterval) {
+        let initialScale: CGFloat = 1.05
+        let duration: TimeInterval = 0.25
         
         cell.alpha = 0.0
         cell.layer.transform = CATransform3DMakeScale(initialScale, initialScale, 1)
@@ -67,8 +79,11 @@ class ThirdViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         if ThirdViewController.newHarjutusId != nil{
             if indexPath.row == db.tableNewRowPosition(table: db.harjutuskordTable, teosId: chosenId, newHarjutusId: ThirdViewController.newHarjutusId) && ThirdViewController.shouldAnimateFirstRow {
                 prependPostWithAnimation()
-                animateIn(cell: cell, withDelay: 0.7)
+                animateIn(cell: cell, withDelay: 0.8)
                 ThirdViewController.shouldAnimateFirstRow = false
+            }
+            else{
+                animateIn2(cell: cell, withDelay: 0.2)
             }
         }
     }
@@ -174,9 +189,39 @@ class ThirdViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             
         }
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        self.tableView4.reloadData()
+    func animateTable() {
+        tableView4.reloadData()
+        let cells = tableView4.visibleCells
+        let tableHeight: CGFloat = tableView4.bounds.size.width
+        
+        for i in cells{
+            let cell : UITableViewCell = i
+            cell.transform = CGAffineTransform(translationX: -tableHeight, y: 0)
+        }
+        var index = 0
+        
+        for a in cells {
+            let cell: UITableViewCell = a
+            UIView.animate(withDuration: 1.0, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options:[], animations: {cell.transform = CGAffineTransform(translationX: 0, y: 0)}, completion: nil)
+            index += 1
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+
+        super.viewWillAppear(animated)
+        /*
+        if ThirdViewController.newHarjutusId != nil && ThirdViewController.shouldAnimateFirstRow{
+            tableView4.insertRows(at: [IndexPath(row: db.tableNewRowPosition(table: db.harjutuskordTable, teosId: chosenId, newHarjutusId: ThirdViewController.newHarjutusId), section: 0)],
+                                  with: .fade)
+        }
+ */
+        if ThirdViewController.enteringFromLeft{
+            animateTable()
+        }
+        else{
+            tableView4.reloadData()
+        }
     }
     override func viewDidLoad() {
         db.harjutuskordDeleteWhereDurationZero(teosId: chosenId)
@@ -198,5 +243,14 @@ class ThirdViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         if let destination = segue.destination as? FifthViewController{
             destination.chosenId = self.chosenId
         }
+        if let destination = segue.destination as? HarjutusViewController{
+            if tableView4.indexPathForSelectedRow != nil{
+                destination.harjutusId = db.returnHarjutusId(teosId: chosenId, pos: (tableView4.indexPathForSelectedRow?.row)!)
+            }
+            else {
+                print("no cell selectd")
+            }
+        }
+        
     }
 }
