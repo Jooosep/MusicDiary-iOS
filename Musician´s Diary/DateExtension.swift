@@ -32,4 +32,10 @@ extension Date {
         let dslTimeOffset = NSTimeZone.local.daylightSavingTimeOffset(for: date)
         return date.addingTimeInterval(dslTimeOffset)
     }
+    var endOfMonth: Date {
+        var components = DateComponents()
+        components.month = 1
+        let date = Calendar.current.date(byAdding: components, to: self.startOfMonth)
+        return (date?.addingTimeInterval(-1))!
+    }
 }

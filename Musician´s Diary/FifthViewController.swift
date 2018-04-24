@@ -44,20 +44,27 @@ class FifthViewController: UIViewController,AVAudioRecorderDelegate {
                 startDate = Date()
             }
             runTimer()
-            record()
-            print("started recording")
+            if mikeOn {
+                record()
+                print("started recording")
+            }
             isTimerRunning = true
             sender.flash()
             UIView.transition(with : startStopButton, duration : 0.5, options : .transitionCrossDissolve,animations: {self.startStopButton.setTitle("STOP", for: .normal)},completion : nil)
         }
         else{
             timer.invalidate()
-            recorder.stop()
+            endDate = Date()
+            if mikeOn {
+                recorder.stop()
+                db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate, filename: filename)
+            }
+            else {
+                db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate)
+            }
             print("stopped recording")
             paused = true
             isTimerRunning = false
-            endDate = Date()
-            db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate, filename: filename)
             print(seconds)
             print("edited duration")
         }
@@ -67,6 +74,14 @@ class FifthViewController: UIViewController,AVAudioRecorderDelegate {
         db.editHarjutuskordDescription(practiceId : harjutusId, description: practiceDescription.text!)
     }
     @IBAction func mikeTapped(_ sender: Any) {
+        if mikeOn {
+            UIView.transition(with : mikeButton, duration : 0.5, options : .transitionCrossDissolve,animations: {self.mikeButton.setTitle("OFF", for: .normal)},completion : nil)
+            mikeOn = false
+        }
+        else {
+            UIView.transition(with : mikeButton, duration : 0.5, options : .transitionCrossDissolve,animations: {self.mikeButton.setTitle("ON", for: .normal)},completion : nil)
+            mikeOn = true
+        }
     }
     
     func timeString(time:Int) -> String {
@@ -126,7 +141,12 @@ class FifthViewController: UIViewController,AVAudioRecorderDelegate {
             paused = true
             isTimerRunning = false
             endDate = Date()
-            db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate, filename: filename)
+            if mikeOn {
+                db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate, filename: filename)
+            }
+            else {
+                db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate)
+            }
             print(seconds)
             print("edited duration")
             ThirdViewController.enteringFromLeft = false

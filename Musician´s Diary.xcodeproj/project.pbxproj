@@ -15,6 +15,7 @@
 		A73E1DC6207FAFDE00682DB4 /* NSLayoutConstraintExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73E1DC5207FAFDE00682DB4 /* NSLayoutConstraintExtension.swift */; };
 		A752872B207BE0EE00B3C954 /* rippleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A752872A207BE0EE00B3C954 /* rippleButton.swift */; };
 		A7528735207C065100B3C954 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7528734207C065100B3C954 /* UIViewExtension.swift */; };
+		A77285CE208D1DC400A75C1A /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77285CD208D1DC400A75C1A /* Report.swift */; };
 		A7886DFE20807DF300A401DD /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7886DFD20807DF300A401DD /* DateExtension.swift */; };
 		A7906EC02073790300E1A8F3 /* FourthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7906EBF2073790300E1A8F3 /* FourthViewController.swift */; };
 		A793CA7E207A3D3600E9F8EF /* NavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A793CA7D207A3D3600E9F8EF /* NavController.swift */; };
@@ -28,6 +29,7 @@
 		A7A00746206AF2CF00AD6914 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7A00744206AF2CF00AD6914 /* Main.storyboard */; };
 		A7A00749206AF2DD00AD6914 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7A00747206AF2DD00AD6914 /* LaunchScreen.storyboard */; };
 		A7A2DC432065810C000A600D /* flow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A7A2DC3C2065810C000A600D /* flow.jpg */; };
+		A7A378CE208F4EC700F7D6A2 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A378CD208F4EC700F7D6A2 /* Tools.swift */; };
 		A7A4D53D206FA670002B6AE8 /* TableViewCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A4D53C206FA670002B6AE8 /* TableViewCell2.swift */; };
 		A7A4D545206FA7B5002B6AE8 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A4D544206FA7B5002B6AE8 /* ThirdViewController.swift */; };
 		A7C084FB2084A04700A491CF /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C084FA2084A04700A491CF /* UITextFieldExtension.swift */; };
@@ -159,6 +161,7 @@
 		A73E1DC5207FAFDE00682DB4 /* NSLayoutConstraintExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintExtension.swift; sourceTree = "<group>"; };
 		A752872A207BE0EE00B3C954 /* rippleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rippleButton.swift; sourceTree = "<group>"; };
 		A7528734207C065100B3C954 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		A77285CD208D1DC400A75C1A /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		A7886DFD20807DF300A401DD /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		A7906EBF2073790300E1A8F3 /* FourthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthViewController.swift; sourceTree = "<group>"; };
 		A793CA7D207A3D3600E9F8EF /* NavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavController.swift; sourceTree = "<group>"; };
@@ -171,6 +174,7 @@
 		A7A00745206AF2CF00AD6914 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A7A00748206AF2DD00AD6914 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A7A2DC3C2065810C000A600D /* flow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = flow.jpg; path = ../../Downloads/flow.jpg; sourceTree = "<group>"; };
+		A7A378CD208F4EC700F7D6A2 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		A7A4D53C206FA670002B6AE8 /* TableViewCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell2.swift; sourceTree = "<group>"; };
 		A7A4D544206FA7B5002B6AE8 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		A7C084FA2084A04700A491CF /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
@@ -281,6 +285,8 @@
 				A7886DFD20807DF300A401DD /* DateExtension.swift */,
 				A7C084FA2084A04700A491CF /* UITextFieldExtension.swift */,
 				A7C0850D2084D56B00A491CF /* IQKeyboardManagerSwift */,
+				A77285CD208D1DC400A75C1A /* Report.swift */,
+				A7A378CD208F4EC700F7D6A2 /* Tools.swift */,
 			);
 			path = "Musician´s Diary";
 			sourceTree = "<group>";
@@ -588,6 +594,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7A378CE208F4EC700F7D6A2 /* Tools.swift in Sources */,
 				A73E1DC6207FAFDE00682DB4 /* NSLayoutConstraintExtension.swift in Sources */,
 				A7C085302084D56B00A491CF /* IQInvocation.swift in Sources */,
 				A7CD5E39208B347A001CBCA6 /* HarjutusViewController.swift in Sources */,
@@ -597,6 +604,7 @@
 				A7C0852D2084D56B00A491CF /* IQKeyboardReturnKeyHandler.swift in Sources */,
 				A7C0852E2084D56B00A491CF /* IQTextView.swift in Sources */,
 				A79E79BE2076CBE800006A2C /* TableViewCell3.swift in Sources */,
+				A77285CE208D1DC400A75C1A /* Report.swift in Sources */,
 				A7C085332084D56B00A491CF /* IQToolbar.swift in Sources */,
 				A752872B207BE0EE00B3C954 /* rippleButton.swift in Sources */,
 				A79E58EA20869A0000BDFF21 /* CalendarViewController.swift in Sources */,

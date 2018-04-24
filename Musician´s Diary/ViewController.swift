@@ -237,6 +237,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     override func viewDidLoad() {
         
+        let date = Date().addingTimeInterval(-70000000)
+        
         tableView1.delegate = self
         tableView1.dataSource = self
         tableView2.delegate = self
@@ -266,6 +268,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             db.create_db()
             ViewController.justOpened = false
         }
+        
+        db.periodicPracticeStatistics(date: Date())
+        db.practiceinPeriod(date: Date())
+        var report = Report(date: date)
         
         let tableOrder = db.tableOrder(table: db.teosTable)
         idOrderTable = tableOrder[0]

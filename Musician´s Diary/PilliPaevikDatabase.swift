@@ -174,6 +174,75 @@ public class PilliPaevikDatabase {
         return [duration,count]
     }
     
+    public func periodicPracticeStatistics(date: Date) -> String{
+        var songName: NSString!
+        var duration: NSString!
+        var string = ""
+        do {
+            let span = harjutuskordTable.filter(algusaeg >= date.startOfMonth && algusaeg <= date.endOfMonth)
+            for user in try database.prepare(span.select(teoseId, pikkus.sum).group(teoseId)) {
+                for troll in try database.prepare(teosTable.select(name).filter(id == user[teoseId]))
+                {
+                    songName = (troll[name] as NSString)
+                }
+                duration = Tools.timeString(minutes: (user[pikkus.sum]!)/60) as NSString
+                string = string + String(format: "%-30s %s \n",songName.utf8String!,duration.utf8String!)
+            }
+            } catch {
+                print(error)
+            }
+        print(string)
+        return string
+    }
+    public func practiceinPeriod(date: Date) -> String {
+        var previousDate: Date?
+        previousDate = nil
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, MMM dd"
+        var songName: NSString!
+        var duration: NSString!
+        var index = 0
+        let format = "%-30s %s \n"
+        var dates = [String]()
+        var table = [[String]]()
+        var completeString = ""
+        let cal = NSCalendar.current
+        do {
+            for user in try database.prepare(harjutuskordTable.select(algusaeg,pikkus,teoseId).filter(algusaeg >= date.startOfMonth && algusaeg <= date.endOfMonth))
+            {
+                table.append([])
+                for troll in try database.prepare(teosTable.select(name).filter(id == user[teoseId]))
+                {
+                    songName = (troll[name] as NSString)
+                }
+                duration = Tools.timeString(minutes: (user[pikkus])/60) as NSString
+                if previousDate == nil {
+                    table[0].append(String(format: format,songName.utf8String!,duration.utf8String!))
+                }
+                else {
+                    if !cal.isDate(user[algusaeg], inSameDayAs: previousDate!) {
+                        index = index + 1
+                        dates.append("\(dateFormatter.string(from: user[algusaeg]))\n")
+                    }
+                    table[index].append(String(format: format,songName.utf8String!,duration.utf8String!))
+                }
+                previousDate = user[algusaeg]
+            }
+        } catch {
+            print(error)
+        }
+        if dates.count > 0 {
+            for index in 0...dates.count-1 {
+                completeString = "\(completeString)\(dates[index])"
+                for item in table[index] {
+                    completeString = "\(completeString)\(item)"
+                }
+            }
+        }
+        print(completeString)
+        return completeString
+    }
+    
     public func totalDurations() -> [Int]{
         var dayDuration = 0
         var weekDuration = 0
@@ -195,6 +264,19 @@ public class PilliPaevikDatabase {
             print(error)
         }
         return [dayDuration, weekDuration, monthDuration]
+    }
+    
+    public func durationForMonth(date: Date) -> Int {
+        var duration = 0
+        do {
+            for user in try database.prepare(harjutuskordTable.select(pikkus).filter(algusaeg >= date.startOfMonth && algusaeg <= date.endOfMonth))
+            {
+                duration += user[pikkus]
+            }
+        } catch {
+            print(error)
+        }
+        return duration
     }
  
     public func tableNewRowPosition(table: Table,teosId : Int, newHarjutusId : Int)-> Int{
@@ -275,6 +357,7 @@ public class PilliPaevikDatabase {
         }
         return filepath
     }
+    
     public func editTeosRow(targetId : Int, field : Expression<String>,value : String){
         let editRow = teosTable.filter(id == targetId)
         do{

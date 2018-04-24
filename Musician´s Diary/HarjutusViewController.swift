@@ -20,10 +20,13 @@ class HarjutusViewController: UIViewController,AVAudioPlayerDelegate {
     var reachedEnd = false
     var duration: TimeInterval!
     var timer = Timer()
+    var timeFormatter = DateComponentsFormatter()
     
     @IBOutlet var rateButtons: [UIButton]!
     
 
+    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var audioProgressView: UIView!
     @IBOutlet var progressTapRecognizer: UITapGestureRecognizer!
@@ -212,30 +215,44 @@ class HarjutusViewController: UIViewController,AVAudioPlayerDelegate {
         let seconds = Int(time) % 60
         return String(format:"%2i:%02i",minutes,seconds)
     }
+    private func secToClock(sec : TimeInterval) -> String{
+        timeFormatter.allowedUnits = [.hour,.minute]
+        timeFormatter.zeroFormattingBehavior = .pad
+        return timeFormatter.string(from: sec)!
+    }
 
     override func viewDidLoad() {
-        
-        let transform = CGAffineTransform(scaleX: 1.0, y: 3.0)
-        audioProgress.transform = transform
-        playButton.setBackgroundImage(#imageLiteral(resourceName: "play-button"), for: UIControlState.normal, style: .plain, barMetrics: .default)
-        audioProgress.setProgress(0.0, animated: false)
-        let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-        let audioDirectoryPath = documentDirectoryPath?.appending("/recordings")
+        var labels = db.selectHarjutuskordRow(pos: harjutusId)
+        dateLabel.text = labels[0]
+        durationLabel.text = secToClock(sec: Double(labels[1])!)
         let filename = db.returnHarjutusFilePath(harjutusId: harjutusId)
-        print(filename)
-        path = URL(string: audioDirectoryPath!.appending(filename))
-        print(path)
-        
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: path)
-        }catch{
-            print(error)
+        if filename != "" {
+            let transform = CGAffineTransform(scaleX: 1.0, y: 3.0)
+            audioProgress.transform = transform
+            playButton.setBackgroundImage(#imageLiteral(resourceName: "play-button"), for: UIControlState.normal, style: .plain, barMetrics: .default)
+            audioProgress.setProgress(0.0, animated: false)
+            let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+            let audioDirectoryPath = documentDirectoryPath?.appending("/recordings")
+            print(filename)
+            path = URL(string: audioDirectoryPath!.appending(filename))
+            print(path)
+            
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: path)
+            }catch{
+                print(error)
+            }
+            duration = audioPlayer.duration
+            audioPlayer.delegate = self
+            audioPlayer.enableRate = true
+            
+            timeLabel.text = "\(timeString(time: 0))/\(timeString(time: Int(duration)))"
         }
-        duration = audioPlayer.duration
-        audioPlayer.delegate = self
-        audioPlayer.enableRate = true
-        
-        timeLabel.text = "\(timeString(time: 0))/\(timeString(time: Int(duration)))"
+        else {
+            audioProgressView.isHidden = true
+            audioToolbar.isHidden = true
+            currentRateButton.isHidden = true
+        }
 
         super.viewDidLoad()
 
