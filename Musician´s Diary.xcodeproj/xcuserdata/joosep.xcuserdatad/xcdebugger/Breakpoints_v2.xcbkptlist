@@ -89,38 +89,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Musician&#xb4;s Diary/PilliPaevikDatabase.swift"
-            timestampString = "546301160.514596"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "308"
-            endingLineNumber = "308"
-            landmarkName = "updateTeosRow(name:author:comment:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
-            timestampString = "546167762.156601"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "ThirdViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/TableViewCell2.swift"
             timestampString = "545057314.165062"
             startingColumnNumber = "9223372036854775807"
@@ -138,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
-            timestampString = "546167762.160962"
+            timestampString = "546872299.094612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "ThirdViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -163,28 +131,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Musician&#xb4;s Diary/PilliPaevikDatabase.swift"
-            timestampString = "546301160.514748"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "dateToStr(date:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
-            timestampString = "546167762.162559"
+            timestampString = "546872299.094732"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
             landmarkName = "commentFieldChange()"
             landmarkType = "7">
          </BreakpointContent>
@@ -196,7 +148,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/PilliPaevikDatabase.swift"
-            timestampString = "546301160.514836"
+            timestampString = "546872299.0948271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
@@ -212,7 +164,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/PilliPaevikDatabase.swift"
-            timestampString = "546301160.514896"
+            timestampString = "546872299.0948811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
@@ -228,12 +180,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/PilliPaevikDatabase.swift"
-            timestampString = "546301160.514954"
+            timestampString = "546872299.094933"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
-            landmarkName = "returnHarjutusId(teosId:pos:)"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "totalDurations()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -253,11 +205,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
-            timestampString = "546167762.164677"
+            timestampString = "546872299.094985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -269,11 +221,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
-            timestampString = "546167762.166346"
+            timestampString = "546872299.095035"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -285,11 +237,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
-            timestampString = "546167762.167773"
+            timestampString = "546872299.095082"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -301,11 +253,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
-            timestampString = "546167762.169083"
+            timestampString = "546872299.095082"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -317,11 +269,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
-            timestampString = "546167762.170395"
+            timestampString = "546872299.095364"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "tableView(_:willDisplay:forRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -333,11 +285,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/FourthViewController.swift"
-            timestampString = "545850785.215288"
+            timestampString = "546786070.750376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -349,11 +301,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ViewController.swift"
-            timestampString = "546301160.515137"
+            timestampString = "547759987.002349"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -365,13 +317,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ViewController.swift"
-            timestampString = "546301160.515191"
+            timestampString = "547759987.006148"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "ViewController"
-            landmarkType = "3">
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "tableView(_:heightForRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -381,11 +333,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
-            timestampString = "546167762.172102"
+            timestampString = "546872299.096488"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -397,11 +349,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ViewController.swift"
-            timestampString = "546301160.515262"
+            timestampString = "547759987.007064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -413,11 +365,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ViewController.swift"
-            timestampString = "546301160.515323"
+            timestampString = "547759987.007679"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "animateTable()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Musician&#xb4;s Diary/ViewController.swift"
+            timestampString = "547759987.008177"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -429,27 +397,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/ViewController.swift"
-            timestampString = "546301160.515394"
+            timestampString = "547759987.008661"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "panPerformed(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Musician&#xb4;s Diary/ViewController.swift"
-            timestampString = "546301160.5154409"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "sideMenuPanned(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -461,11 +413,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/HarjutusViewController.swift"
-            timestampString = "546171237.587808"
+            timestampString = "546786070.754346"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "audioPlayerDidFinishPlaying(_:successfully:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -477,11 +429,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/HarjutusViewController.swift"
-            timestampString = "546171237.587924"
+            timestampString = "546786070.755"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
             landmarkName = "playButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -493,11 +445,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/HarjutusViewController.swift"
-            timestampString = "546171237.58798"
+            timestampString = "546786070.755445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "rewindPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -509,11 +461,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/HarjutusViewController.swift"
-            timestampString = "546171237.588029"
+            timestampString = "546786070.755874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "rewindPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -525,11 +477,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/HarjutusViewController.swift"
-            timestampString = "546171237.588076"
+            timestampString = "546786070.756332"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "rewindPressed(_:)"
             landmarkType = "7">
             <Locations>
@@ -573,11 +525,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/HarjutusViewController.swift"
-            timestampString = "546171237.588124"
+            timestampString = "546786070.756736"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "rewindPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -589,11 +541,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/HarjutusViewController.swift"
-            timestampString = "546171237.588171"
+            timestampString = "546786070.757182"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
             landmarkName = "progressViewTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -605,11 +557,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Musician&#xb4;s Diary/HarjutusViewController.swift"
-            timestampString = "546171237.588232"
+            timestampString = "546786070.757593"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
             landmarkName = "HarjutusViewController"
             landmarkType = "3">
             <Locations>
@@ -674,6 +626,54 @@
                   offsetFromSymbolStart = "1464">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
+            timestampString = "546872299.098259"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "pieceTrashed(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Musician&#xb4;s Diary/ThirdViewController.swift"
+            timestampString = "546872299.0983239"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Musician&#xb4;s Diary/PilliPaevikDatabase.swift"
+            timestampString = "546872299.098381"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "create_db()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

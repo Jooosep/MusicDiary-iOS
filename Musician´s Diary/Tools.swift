@@ -19,4 +19,9 @@ public class Tools {
             return "\(hours) \(hours > 1 ? "hours" : "hour") \(minutes) \(minutes == 1 ? "minute" : "minutes")"
         }
     }
+    static func dateToStr(date: Date) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+        return dateFormatter.string(from: date)
+    }
 }

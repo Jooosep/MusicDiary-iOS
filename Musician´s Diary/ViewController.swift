@@ -21,8 +21,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var dailyGoal = 100.0
     
     static var justOpened : Bool!
+    static var destroySongId: Int? = nil
     
     
+    @IBOutlet weak var startInfoView: UIView!
+    @IBOutlet weak var rainView: JSMatrixCodeRainView!
     @IBOutlet weak var screenDimmer: UIButton!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     @IBOutlet weak var sideBarView: UIView!
@@ -30,6 +33,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     @IBOutlet weak var tableView1: UITableView!
     @IBOutlet weak var tableView2: UITableView!
     @IBOutlet weak var progressBarImage: UIImageView!
+    @IBOutlet weak var firstNameField: UITextField!
+    @IBOutlet weak var lastNameField: UITextField!
+    @IBOutlet weak var instrumentField: UITextField!
     
     @IBOutlet weak var progressBarImage2: UIImageView!
 
@@ -44,6 +50,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @IBOutlet weak var progressBarWidthConstraint3: NSLayoutConstraint!
     
+    @IBAction func initialContinuePressed(_ sender: UIButton) {
+        UIView.transition(with : rainView, duration : 0.6, options : .transitionCrossDissolve,animations: {self.rainView.isHidden = true},completion : nil)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+
+    }
     
     @IBAction func panPerformed(_ sender: UIScreenEdgePanGestureRecognizer) {
         if sender.state == .began || sender.state == .changed {
@@ -135,7 +146,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? ThirdViewController{
+        if let destination = segue.destination as? SongViewController{
             if tableView1.indexPathForSelectedRow != nil{
                 destination.chosenId = idOrderTable[(tableView1.indexPathForSelectedRow?.row)!]
             }
@@ -197,18 +208,20 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func animateTable(){
         tableView1.reloadData()
         tableView2.reloadData()
-        let cells = tableView1.visibleCells
-        let cells2 = tableView2.visibleCells
+        let cells = tableView1.visibleCells + tableView2.visibleCells
+        //let cells2 = tableView2.visibleCells
         let tableHeight: CGFloat = tableView1.bounds.size.height
         let tableHeight2: CGFloat = tableView2.bounds.size.height
         for i in cells{
             let cell : UITableViewCell = i
             cell.transform = CGAffineTransform(translationX: 0, y: tableHeight)
         }
+        /*
         for i in cells2{
             let cell : UITableViewCell = i
             cell.transform = CGAffineTransform(translationX: 0, y: tableHeight2)
         }
+ */
         var index = 0
         
         for a in cells {
@@ -216,15 +229,40 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             UIView.animate(withDuration: 1.0, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options:[], animations: {cell.transform = CGAffineTransform(translationX: 0, y: 0)}, completion: nil)
             index += 1
         }
+        /*
         for a in cells2 {
             let cell: UITableViewCell = a
             UIView.animate(withDuration: 1.0, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options:[], animations: {cell.transform = CGAffineTransform(translationX: 0, y: 0)}, completion: nil)
             index += 1
         }
+ */
+    }
+    
+    @objc func removeCell() {
+        tableView1.beginUpdates()
+        tableView2.beginUpdates()
+        let id = ViewController.destroySongId!
+
+        for i in 0...idOrderTable.count - 1 {
+            if idOrderTable[i] == id {
+                print("row to delete from teosTable \(i)")
+                db.deleteTeosRow(teosId: id)
+                tableView1.deleteRows(at: [IndexPath(row: i, section: 0)], with: .right)
+                tableView2.deleteRows(at: [IndexPath(row: i, section: 0)], with: .right)
+                let tableOrder = db.tableOrder(table: db.teosTable)
+                idOrderTable = tableOrder[0]
+                practiceCountTable = tableOrder[1]
+                durationTable = tableOrder[2]
+                break
+            }
+        }
+        tableView1.endUpdates()
+        tableView2.endUpdates()
+        ViewController.destroySongId = nil
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        ThirdViewController.enteringFromLeft = true
+        SongViewController.enteringFromLeft = true
         let tableOrder = db.tableOrder(table: db.teosTable)
         idOrderTable = tableOrder[0]
         practiceCountTable = tableOrder[1]
@@ -233,10 +271,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         super.viewWillAppear(animated)
         animateTable()
         setProgressBars()
+        if ViewController.destroySongId != nil {
+            Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.removeCell), userInfo: nil, repeats: false)
+        }
         
     }
     override func viewDidLoad() {
-        
+        navigationController?.setNavigationBarHidden(true, animated: true)
         let date = Date().addingTimeInterval(-70000000)
         
         tableView1.delegate = self
@@ -249,6 +290,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         print(dateFormatter.string(from: Date().startOfWeek))
         print(dateFormatter.string(from: Date().startOfMonth))
  */
+        firstNameField.underlined()
+        lastNameField.underlined()
+        instrumentField.underlined()
+        startInfoView.layer.masksToBounds = true
+        startInfoView.layer.cornerRadius = 6
         
         progressBarImage.layer.masksToBounds = true
         progressBarImage.layer.cornerRadius = 6
@@ -269,9 +315,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             ViewController.justOpened = false
         }
         
-        db.periodicPracticeStatistics(date: Date())
-        db.practiceinPeriod(date: Date())
-        var report = Report(date: date)
         
         let tableOrder = db.tableOrder(table: db.teosTable)
         idOrderTable = tableOrder[0]
@@ -295,7 +338,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             UserDefaults.standard.register(defaults: ["firstOpen" : true])
             UserDefaults.standard.set(true, forKey: "firstOpen")
             let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-            if let documenDirectoryPath = documentDirectoryPath {
+            if documentDirectoryPath != nil {
                 let audioDirectoryPath = documentDirectoryPath?.appending("/recordings")
                 let fileManager = FileManager.default
                 if !fileManager.fileExists(atPath: audioDirectoryPath!) {
@@ -308,7 +351,20 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 }
             }
             print("opened app for first time")
+            rainView.isHidden = false
+            /*
+            let alert = UIAlertController(title: "Welcome", message: "Fill in your information or skip this", preferredStyle: .alert)
+            let skipAction = UIAlertAction(title: "Skip", style: .cancel, handler: { (action) in
+                self.rainView.isHidden = true
+            })
+            alert.addAction(skipAction)
+            present(alert, animated: true, completion: nil)
+ */
         }
+        
+        db.periodicPracticeStatistics(date: Date())
+        db.practiceinPeriod(date: Date())
+        var report = Report(date: date)
         
         setProgressBars()
         
@@ -342,9 +398,40 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         sheet.addAction(action2);
         present(sheet,animated: true,completion: nil);
     }
+    
     @IBAction func sendReportButtonTapped(_ sender: UIButton) {
-
+        let def = UserDefaults.standard
+        if def.object(forKey: "firstName") as! String == "" || def.object(forKey: "lastName") as! String == "" || def.object(forKey: "instrument") as! String == "" {
+            let alert = UIAlertController(title:"Insufficient info", message:"Fill in your first name, last name and instrument at settings", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
+        else {
+            let alert = UIAlertController(title:"Choose month",message:"create a practice report for a month",preferredStyle: .alert);
+            let action1 = UIAlertAction(title: "Cancel",style:.cancel, handler:nil);
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMMM yyyy"
+            let current = Date()
+            var components = DateComponents()
+            for index in 0...9 {
+                components.month = -(index)
+                alert.addAction(UIAlertAction(title: dateFormatter.string(from: Calendar.current.date(byAdding: components, to: current)!),style:.default,handler: { (action) in
+                    let report = Report(date: dateFormatter.date(from: action.title!)!)
+                    let activityController = UIActivityViewController(activityItems: [report.completeString()], applicationActivities: nil)
+                    self.present(activityController, animated: true, completion: nil)
+                }))
+            }
+            alert.addAction(action1);
+            let subView = alert.view.subviews.first!
+            let contentView = subView.subviews.first!
+            contentView.backgroundColor = UIColor.white
+            contentView.layer.cornerRadius = 5
+            
+            present(alert,animated: true,completion: nil);
+        }
     }
+    
     @IBAction func settingsButtonTapped(_ sender: UIButton) {
 
     }

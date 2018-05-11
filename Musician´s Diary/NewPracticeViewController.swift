@@ -1,5 +1,5 @@
 //
-//  FifthViewController.swift
+//  NewPracticeViewController.swift
 //  Musician´s Diary
 //
 //  Created by Joosep Teemaa on 08/04/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class FifthViewController: UIViewController,AVAudioRecorderDelegate {
+class NewPracticeViewController: UIViewController,AVAudioRecorderDelegate {
 
     //vars
     var db = PilliPaevikDatabase.dbManager
@@ -39,6 +39,8 @@ class FifthViewController: UIViewController,AVAudioRecorderDelegate {
     @IBOutlet weak var practiceDescription: UITextField!
     
     @IBAction func startTapped(_ sender: UIButton) {
+
+        SongViewController.shouldAnimateFirstRow = true
         if !isTimerRunning{
             if !paused{
                 startDate = Date()
@@ -62,6 +64,7 @@ class FifthViewController: UIViewController,AVAudioRecorderDelegate {
             else {
                 db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate)
             }
+            UIView.transition(with : startStopButton, duration : 0.5, options : .transitionCrossDissolve,animations: {self.startStopButton.setTitle("START", for: .normal)},completion : nil)
             print("stopped recording")
             paused = true
             isTimerRunning = false
@@ -91,7 +94,7 @@ class FifthViewController: UIViewController,AVAudioRecorderDelegate {
         return String(format:"%02i:%02i:%02i",hours,minutes,seconds)
     }
     func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(FifthViewController.updateTimer)), userInfo: nil,repeats:true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(NewPracticeViewController.updateTimer)), userInfo: nil,repeats:true)
         timer.fire()
     }
     @objc func updateTimer() {
@@ -149,7 +152,7 @@ class FifthViewController: UIViewController,AVAudioRecorderDelegate {
             }
             print(seconds)
             print("edited duration")
-            ThirdViewController.enteringFromLeft = false
+            SongViewController.enteringFromLeft = false
         }
         super.viewWillDisappear(true)
     }
@@ -169,12 +172,11 @@ class FifthViewController: UIViewController,AVAudioRecorderDelegate {
         filepath = URL(string: audioDirectoryPath!.appending(filename))
         print(filepath)
         recorderSettings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 12000, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
-        let tapper = UITapGestureRecognizer(target: self, action: #selector(ThirdViewController.handleSingleTap))
+        let tapper = UITapGestureRecognizer(target: self, action: #selector(SongViewController.handleSingleTap))
         tapper.cancelsTouchesInView = false
         print("chosenId: ")
         print(chosenId)
-        ThirdViewController.newHarjutusId = Int(harjutusId)
-        ThirdViewController.shouldAnimateFirstRow = true
+        SongViewController.newHarjutusId = Int(harjutusId)
         print("created new harjutuskord row")
         startStopButton.layer.cornerRadius = 10;
         mikeButton.layer.cornerRadius = 10;

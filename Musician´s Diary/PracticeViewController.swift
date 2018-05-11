@@ -1,5 +1,5 @@
 //
-//  HarjutusViewController.swift
+//  PracticeViewController.swift
 //  Musician´s Diary
 //
 //  Created by Joosep Teemaa on 21/04/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class HarjutusViewController: UIViewController,AVAudioPlayerDelegate {
+class PracticeViewController: UIViewController,AVAudioPlayerDelegate {
     
     var db = PilliPaevikDatabase.dbManager
     var harjutusId: Int!
@@ -25,6 +25,7 @@ class HarjutusViewController: UIViewController,AVAudioPlayerDelegate {
     @IBOutlet var rateButtons: [UIButton]!
     
 
+    @IBOutlet weak var practiceDescriptionField: UITextField!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -36,6 +37,19 @@ class HarjutusViewController: UIViewController,AVAudioPlayerDelegate {
     @IBOutlet weak var currentRateButton: UIButton!
     
 
+    
+    @IBAction func practiceTrashed(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Delete practice session?", message: "Are you sure you want to delete the practice and its recording", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            SongViewController.destroyPracticeId = self.harjutusId
+            self.navigationController?.popViewController(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        print("destroyId: \(harjutusId!)")
+        present(alert, animated: true, completion: nil)
+    }
     
     @IBAction func selectRate(_ sender: UIButton) {
         rateButtons .forEach { (button) in
@@ -222,6 +236,8 @@ class HarjutusViewController: UIViewController,AVAudioPlayerDelegate {
     }
 
     override func viewDidLoad() {
+        SongViewController.enteringFromLeft = false
+        practiceDescriptionField.underlinedMercury()
         var labels = db.selectHarjutuskordRow(pos: harjutusId)
         dateLabel.text = labels[0]
         durationLabel.text = secToClock(sec: Double(labels[1])!)

@@ -37,16 +37,94 @@ public class PilliPaevikDatabase {
     
     
     var database : Connection!;
-    var dateFormatter = DateFormatter()
 
-    private func dateToStr(date: Date) -> String{
-        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
-        return dateFormatter.string(from: date)
+    //MARK: General
+    
+    public func create_db(){
+        do{
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true);
+            let fileUrl = documentDirectory.appendingPathComponent("users").appendingPathExtension("sqlite3");
+            let db = try Connection(fileUrl.path);
+            self.database = db;
+            print("connected to tb")
+        }
+        catch{
+            print(error)
+        }
     }
     
-    public func selectField(pos: Int) -> [String] {
+    public func create_tables(){
+        
+        let createTeosTable = self.teosTable.create{(table) in
+            table.column(self.id,primaryKey: .autoincrement)
+            table.column(self.name, defaultValue: "")
+            table.column(self.author,defaultValue: "")
+            table.column(self.comment,defaultValue: "")
+        }
+        do{
+            try self.database.run(createTeosTable)
+            print("Created teos table")
+        }catch{
+            print(error);
+        }
+        
+        let createHarjutuskordTable = self.harjutuskordTable.create{(table) in
+            table.column(self.id,primaryKey: .autoincrement)
+            table.column(self.algusaeg, defaultValue: Date())
+            table.column(self.pikkus,defaultValue:0)
+            table.column(self.lopuaeg,defaultValue:Date())
+            table.column(self.harjutuseKirjeldus,defaultValue: "practice")
+            table.column(self.lisatudPaevikusse)
+            table.column(self.teoseId, references: teosTable, id)
+            table.column(self.helifail,defaultValue:"")
+        }
+        do{
+            try self.database.run(createHarjutuskordTable)
+            print("Created harjutuskord table")
+        }catch{
+            print(error);
+        }
+    }
+    
+    public func listTable(){
+        do{
+            print("Listing current Teos table")
+            let teosTable = try self.database.prepare(self.teosTable)
+            for user in teosTable {
+                print( "id: \(user[self.id]), name: \(user[self.name]), author: \(user[self.author])")
+            }
+        }catch{
+            
+        }
+        do{
+            print("Listing current hk table")
+            let harjutuskordTable = try self.database.prepare(self.harjutuskordTable)
+            for user in harjutuskordTable {
+                print( "id: \(user[self.id]),algusaeg: \(user[self.algusaeg]), pikkus: \(user[self.pikkus]), lopuaeg: \(user[self.lopuaeg]), teosID: \(user[self.teoseId])")
+                print("teosID: \(user[self.teoseId])")
+            }
+        }catch{
+            
+        }
+    }
+    
+    public func rowCount(table: Table) -> Int{
+        var rowCount : Int!
+        do{
+            rowCount = try database.scalar(table.count)
+        }catch{
+            print(error)
+        }
+        return rowCount
+    }
+
+    //MARK Song
+    
+    public func selectSongField(pos: Int) -> [String] {
         var stringy = [String]()
         if database != nil{
+            listTable()
+            print("id: \(pos)")
          do{
             for user in try database.prepare(teosTable.select(name,author,comment).filter(id == pos)){
                 
@@ -66,36 +144,8 @@ public class PilliPaevikDatabase {
         }
         return stringy
     }
-    public func listTable(){
-        do{
-            print("Listing current Teos table")
-            let teosTable = try self.database.prepare(self.teosTable)
-            for user in teosTable {
-                print( "id: \(user[self.id]), name: \(user[self.name]), author: \(user[self.author])")
-            }
-        }catch{
-            
-        }
-        do{
-            print("Listing current hk table")
-            let harjutuskordTable = try self.database.prepare(self.harjutuskordTable)
-            for user in harjutuskordTable {
-                print( "id: \(user[self.id]),algusaeg: \(user[self.algusaeg]), pikkus: \(user[self.pikkus]), lopuaeg: \(user[self.lopuaeg]), teosID: \(user[self.teoseId])")
-            }
-        }catch{
-            
-        }
-    }
     
-    public func rowCount(table: Table) -> Int{
-        var rowCount : Int!
-        do{
-            rowCount = try database.scalar(table.count)
-        }catch{
-            print(error)
-        }
-        return rowCount
-    }
+    
     public func rowCountForId(targetId : Int,table: Table) -> Int{
         var rowCount : Int!
         do{
@@ -117,61 +167,40 @@ public class PilliPaevikDatabase {
         return  Int(rowId)
     }
     
-    public func newHarjutuskordRow(teosId : Int)->Int64{
-        var rowID : Int64!
-        do{
-            rowID = try database.run(harjutuskordTable.insert(lisatudPaevikusse <- Date(),teoseId <- teosId))
-            print("new practiceRow")
-        }catch{
+    public func deleteTeosRow(teosId: Int) {
+        do {
+            let query = teosTable.filter(id == teosId)
+            try database.run(query.delete())
+            let query2 = harjutuskordTable.filter(teoseId == teosId)
+            try database.run(query2.delete())
+        } catch {
             print(error)
         }
-        return rowID
     }
     
-    public func tableOrder(table: Table)-> [[Int]]{
-        var idTable = [Int]()
-        var countTable = [Int]()
-        var durationTable = [Int]()
-        var totalDuration = 0
+    public func editTeosRow(targetId : Int, field : Expression<String>,value : String){
+        let editRow = teosTable.filter(id == targetId)
         do{
-            if database == nil{print("nilll")}
-            for user in try database.prepare(table.select(id).order(id.desc)){
-                idTable.append(user[id])
-                countTable.append(try database.scalar(harjutuskordTable.filter(teoseId == user[id]).count))
-                for user in try database.prepare(harjutuskordTable.filter(teoseId == user[id])){
-                    totalDuration += user[pikkus]
-                }
-                durationTable.append(totalDuration)
-                totalDuration = 0
-            }
+            try database.run(editRow.update(field <- value))
         }catch{
             print(error)
         }
-        return [idTable, countTable, durationTable]
     }
-    public func tableOrderByDate(table: Table,teosId : Int)-> [Int]{
-        var idTable = [Int]()
+    
+    public func updateTeosRow(name:String,author:String,comment:String){
+        var max : Int!
         do{
-            for user in try database.prepare(table.select(id).filter(teoseId == teosId).order(algusaeg.desc)){
-                idTable.append(user[id])
-            }
+            max = try database.scalar(teosTable.select(id.max))
         }catch{
             print(error)
         }
-        return idTable
-    }
-    public func durationByDay(date : Date) -> [Int]{
-        var duration = 0
-        var count = 0
+        let newRow = teosTable.filter(id == max)
         do{
-            for user in try database.prepare(harjutuskordTable.select(pikkus).filter(algusaeg >= date.startOfDay && algusaeg <= date.endOfDay)){
-                duration += user[pikkus]
-                count += 1
-            }
+            try database.run(newRow.update(self.name <- name, self.author <- author, self.comment <- comment))
+            print("newname: " + name)
         }catch{
             print(error)
         }
-        return [duration,count]
     }
     
     public func periodicPracticeStatistics(date: Date) -> String{
@@ -186,14 +215,15 @@ public class PilliPaevikDatabase {
                     songName = (troll[name] as NSString)
                 }
                 duration = Tools.timeString(minutes: (user[pikkus.sum]!)/60) as NSString
-                string = string + String(format: "%-30s %s \n",songName.utf8String!,duration.utf8String!)
+                string = string + String(format: "%-20s %s \n",songName.utf8String!,duration.utf8String!)
             }
-            } catch {
-                print(error)
-            }
+        } catch {
+            print(error)
+        }
         print(string)
         return string
     }
+    
     public func practiceinPeriod(date: Date) -> String {
         var previousDate: Date?
         previousDate = nil
@@ -242,6 +272,78 @@ public class PilliPaevikDatabase {
         print(completeString)
         return completeString
     }
+    
+    //MARK Practice
+    
+    public func deletePracticeRow(harjutusId: Int) {
+        do {
+            let query = harjutuskordTable.filter(id == harjutusId)
+            try database.run(query.delete())
+        } catch {
+            print(error)
+        }
+    }
+    
+    public func newPracticeRow(teosId : Int)->Int64{
+        var rowID : Int64!
+        do{
+            rowID = try database.run(harjutuskordTable.insert(algusaeg <- Date(), pikkus <- 0, lopuaeg <- Date(),lisatudPaevikusse <- Date(),teoseId <- teosId))
+            print("new practiceRow")
+        }catch{
+            print(error)
+        }
+        return rowID
+    }
+    
+    public func practiceTableOrder(table: Table)-> [[Int]]{
+        var idTable = [Int]()
+        var countTable = [Int]()
+        var durationTable = [Int]()
+        var totalDuration = 0
+        do{
+            if database == nil{print("nilll")}
+            for user in try database.prepare(table.select(id).order(id.desc)){
+                idTable.append(user[id])
+                countTable.append(try database.scalar(harjutuskordTable.filter(teoseId == user[id]).count))
+                for user in try database.prepare(harjutuskordTable.filter(teoseId == user[id])){
+                    totalDuration += user[pikkus]
+                }
+                durationTable.append(totalDuration)
+                totalDuration = 0
+            }
+        }catch{
+            print(error)
+        }
+        return [idTable, countTable, durationTable]
+    }
+    
+    public func tableOrderByDate(table: Table,teosId : Int)-> [Int]{
+        var idTable = [Int]()
+        do{
+            for user in try database.prepare(table.select(id).filter(teoseId == teosId).order(algusaeg.desc)){
+                idTable.append(user[id])
+            }
+        }catch{
+            print(error)
+        }
+        return idTable
+    }
+    
+    public func durationByDay(date : Date) -> [Int]{
+        var duration = 0
+        var count = 0
+        do{
+            for user in try database.prepare(harjutuskordTable.select(pikkus).filter(algusaeg >= date.startOfDay && algusaeg <= date.endOfDay)){
+                duration += user[pikkus]
+                count += 1
+            }
+        }catch{
+            print(error)
+        }
+        return [duration,count]
+    }
+    
+    
     
     public func totalDurations() -> [Int]{
         var dayDuration = 0
@@ -295,22 +397,6 @@ public class PilliPaevikDatabase {
         return 0
     }
     
-    public func updateTeosRow(name:String,author:String,comment:String){
-        var max : Int!
-        do{
-            max = try database.scalar(teosTable.select(id.max))
-        }catch{
-            print(error)
-        }
-        let newRow = teosTable.filter(id == max)
-        do{
-            try database.run(newRow.update(self.name <- name, self.author <- author, self.comment <- comment))
-            print("newname: " + name)
-        }catch{
-            print(error)
-        }
-    }
-    
     
     public func selectHarjutuskordRow(pos: Int) -> [String] {
         var stringy = [String]()
@@ -318,7 +404,7 @@ public class PilliPaevikDatabase {
             do{
                 for user in try database.prepare(harjutuskordTable.select(algusaeg,pikkus,lopuaeg,harjutuseKirjeldus,lisatudPaevikusse).filter(id == pos)){
                     
-                    stringy = ["\(String(dateToStr(date: user[algusaeg])))","\(String(user[pikkus]))","\(String(dateToStr(date: user[lopuaeg])))","\(String(user[harjutuseKirjeldus]))","\(String(dateToStr(date: user[lisatudPaevikusse])))"]
+                    stringy = ["\(String(Tools.dateToStr(date: user[algusaeg])))","\(String(user[pikkus]))","\(String(Tools.dateToStr(date: user[lopuaeg])))","\(String(user[harjutuseKirjeldus]))","\(String(Tools.dateToStr(date: user[lisatudPaevikusse])))"]
                 }
             }
                 
@@ -358,14 +444,6 @@ public class PilliPaevikDatabase {
         return filepath
     }
     
-    public func editTeosRow(targetId : Int, field : Expression<String>,value : String){
-        let editRow = teosTable.filter(id == targetId)
-        do{
-            try database.run(editRow.update(field <- value))
-        }catch{
-            print(error)
-        }
-    }
     
     public func editHarjutuskordTime(practiceId: Int64, startTime: Date, duration: Int, endTime: Date , filename: String = ""){
         do{
@@ -385,67 +463,18 @@ public class PilliPaevikDatabase {
             print(error)
         }
     }
-    public func harjutuskordDeleteWhereDurationZero(teosId:Int){
+    public func harjutuskordDeleteWhereDurationZero(teosId:Int) -> Int{
+        var deletion = 0
         do{
             let row = harjutuskordTable.filter(teoseId == teosId && pikkus == 0)
-            try database.run(row.delete())
+            print("row to delete)")
+            deletion = try database.run(row.delete())
+            print(deletion)
         }catch{
             print(error)
         }
-    }
-    
-    public func create_db(){
-        do{
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true);
-            let fileUrl = documentDirectory.appendingPathComponent("users").appendingPathExtension("sqlite3");
-            let db = try Connection(fileUrl.path);
-            self.database = db;
-            print("connected to tb")
-        }
-        catch{
-            print(error)
-        }
+        return deletion
     }
 
-    public func clear_table(){
-        do{
-            try database.run(teosTable.delete())
-            print("teosTable cleared")
-        }catch{
-            print(error)
-        }
-    }
-    public func create_tables(){
-        
-        let createTeosTable = self.teosTable.create{(table) in
-            table.column(self.id,primaryKey: .autoincrement)
-            table.column(self.name, defaultValue: "")
-            table.column(self.author,defaultValue: "")
-            table.column(self.comment,defaultValue: "")
-        }
-        do{
-            try self.database.run(createTeosTable)
-            print("Created teos table")
-        }catch{
-            print(error);
-        }
-        
-        let createHarjutuskordTable = self.harjutuskordTable.create{(table) in
-            table.column(self.id,primaryKey: .autoincrement)
-            table.column(self.algusaeg, defaultValue: Date())
-            table.column(self.pikkus,defaultValue:0)
-            table.column(self.lopuaeg,defaultValue:Date())
-            table.column(self.harjutuseKirjeldus,defaultValue: "practice")
-            table.column(self.lisatudPaevikusse)
-            table.column(self.teoseId, references: teosTable, id)
-            table.column(self.helifail,defaultValue:"")
-        }
-        do{
-            try self.database.run(createHarjutuskordTable)
-            print("Created harjutuskord table")
-        }catch{
-            print(error);
-        }
-    }
 }
 

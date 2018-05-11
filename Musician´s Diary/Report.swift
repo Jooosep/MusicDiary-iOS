@@ -46,19 +46,9 @@ public class Report {
         print(startDate)
         print(lengthOfPeriod)
     }
-    private func timeString(minutes: Int) -> String{
-        if minutes < 60 {
-            return minutes == 1 ? "\(minutes) minute" : "\(minutes) minutes"
-        }
-        else {
-            let hours = minutes / 60
-            let minutes = minutes - hours * 60
-            return "\(hours) \(hours > 1 ? "hours" : "hour") \(minutes) \(minutes == 1 ? "minute" : "minutes")"
-        }
-    }
     
     public func theme() -> String {
-        return "Musician's Diary monthly report - \(firstName) \(lastName), \(instrument), \(periodTitle)"
+        return "Musician's Diary monthly report - \(firstName!) \(lastName!), \(instrument!), \(periodTitle!)"
     }
     
     private func summary() -> String {
@@ -75,6 +65,10 @@ public class Report {
     private func detailedContent() -> String{
         var detail = ""
         return ""
+    }
+    
+    public func completeString() -> String{
+        return "\(theme())\n\n\(summary())"
     }
     
 }

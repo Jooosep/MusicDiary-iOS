@@ -1,5 +1,5 @@
 //
-//  FourthViewController.swift
+//  AddPracticeViewController.swift
 //  Musician´s Diary
 //
 //  Created by Joosep Teemaa on 03/04/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate {
+class AddPracticeViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate {
     
     //lets
     let dateFormatter = DateFormatter()
@@ -142,6 +142,12 @@ class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         }
         print(endDate.timeIntervalSince(startDate))
         print(pickerMax)
+        if pickerMax > 0 {
+            SongViewController.shouldAnimateFirstRow = true
+        }
+        else {
+            SongViewController.shouldAnimateFirstRow = false
+        }
         pickerView.reloadComponent(0)
         if beingConfigured != 2 {
             durationPicker.setTitle(String(pickerMax), for: durationPicker.state)
@@ -198,15 +204,14 @@ class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        ThirdViewController.enteringFromLeft = false
+        SongViewController.enteringFromLeft = false
         
-        let tapper = UITapGestureRecognizer(target: self, action: #selector(ThirdViewController.handleSingleTap))
+        let tapper = UITapGestureRecognizer(target: self, action: #selector(SongViewController.handleSingleTap))
         tapper.cancelsTouchesInView = false
         print("chosenId: ")
         print(chosenId)
-        harjutusId = db.newHarjutuskordRow(teosId: chosenId)
-        ThirdViewController.newHarjutusId = Int(harjutusId)
-        ThirdViewController.shouldAnimateFirstRow = true
+        harjutusId = db.newPracticeRow(teosId: chosenId)
+        SongViewController.newHarjutusId = Int(harjutusId)
         print("created new harjutuskord row")
         
         alert.addAction(dismiss);
@@ -224,7 +229,7 @@ class FourthViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let destination = segue.destination as? ThirdViewController{
+        if let destination = segue.destination as? SongViewController{
             destination.chosenId = self.chosenId
         }
     }
