@@ -11,7 +11,7 @@ import AVFoundation
 
 class PracticeViewController: UIViewController,AVAudioPlayerDelegate {
     
-    var db = PilliPaevikDatabase.dbManager
+    var db = DiaryDatabase.dbManager
     var harjutusId: Int!
     var audioPlayer = AVAudioPlayer()
     var path: URL!
@@ -238,10 +238,10 @@ class PracticeViewController: UIViewController,AVAudioPlayerDelegate {
     override func viewDidLoad() {
         SongViewController.enteringFromLeft = false
         practiceDescriptionField.underlinedMercury()
-        var labels = db.selectHarjutuskordRow(pos: harjutusId)
+        var labels = db.selectPracticeRow(pos: harjutusId)
         dateLabel.text = labels[0]
         durationLabel.text = secToClock(sec: Double(labels[1])!)
-        let filename = db.returnHarjutusFilePath(harjutusId: harjutusId)
+        let filename = db.returnPracticeFilePath(practiceId: harjutusId)
         if filename != "" {
             let transform = CGAffineTransform(scaleX: 1.0, y: 3.0)
             audioProgress.transform = transform

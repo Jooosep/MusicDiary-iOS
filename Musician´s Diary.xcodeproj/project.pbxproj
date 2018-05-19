@@ -24,7 +24,7 @@
 		A793CA7E207A3D3600E9F8EF /* NavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A793CA7D207A3D3600E9F8EF /* NavController.swift */; };
 		A793CA81207A61EF00E9F8EF /* NewPracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A793CA80207A61EF00E9F8EF /* NewPracticeViewController.swift */; };
 		A797CB18206D4A460049CBD6 /* TableViewCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = A797CB17206D4A460049CBD6 /* TableViewCell1.swift */; };
-		A79E4E9F206D158E0017BE86 /* PilliPaevikDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EDEA0020065815009A5FDE /* PilliPaevikDatabase.swift */; };
+		A79E4E9F206D158E0017BE86 /* DiaryDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EDEA0020065815009A5FDE /* DiaryDatabase.swift */; };
 		A79E58EA20869A0000BDFF21 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E58E920869A0000BDFF21 /* CalendarViewController.swift */; };
 		A79E79BE2076CBE800006A2C /* TableViewCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E79BD2076CBE800006A2C /* TableViewCell3.swift */; };
 		A7A00732206AEECE00AD6914 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A00731206AEECE00AD6914 /* ViewController.swift */; };
@@ -208,7 +208,7 @@
 		A7D64300207D430600169904 /* TableViewCell4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell4.swift; sourceTree = "<group>"; };
 		A7EDE9DE200638EA009A5FDE /* Musician´s Diary-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Musician´s Diary-Bridging-Header.h"; sourceTree = "<group>"; };
 		A7EDE9E220063D34009A5FDE /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
-		A7EDEA0020065815009A5FDE /* PilliPaevikDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilliPaevikDatabase.swift; sourceTree = "<group>"; };
+		A7EDEA0020065815009A5FDE /* DiaryDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDatabase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,9 +277,8 @@
 				94B707D51FF82144000CA6E3 /* Teos.swift */,
 				942A15161FF81B0C00836235 /* Assets.xcassets */,
 				942A151B1FF81B0C00836235 /* Info.plist */,
-				A76400F92092358400D18705 /* MusiSync.ttf */,
-				A76401042092400C00D18705 /* matrixcode.ttf */,
-				A7EDEA0020065815009A5FDE /* PilliPaevikDatabase.swift */,
+				A7C0850D2084D56B00A491CF /* IQKeyboardManagerSwift */,
+				A7EDEA0020065815009A5FDE /* DiaryDatabase.swift */,
 				A797CB17206D4A460049CBD6 /* TableViewCell1.swift */,
 				A7A4D53C206FA670002B6AE8 /* TableViewCell2.swift */,
 				A79E79BD2076CBE800006A2C /* TableViewCell3.swift */,
@@ -293,7 +292,8 @@
 				A7886DFD20807DF300A401DD /* DateExtension.swift */,
 				A7C084FA2084A04700A491CF /* UITextFieldExtension.swift */,
 				A7640100209235F200D18705 /* JSMatrixCodeRainView.swift */,
-				A7C0850D2084D56B00A491CF /* IQKeyboardManagerSwift */,
+				A76400F92092358400D18705 /* MusiSync.ttf */,
+				A76401042092400C00D18705 /* matrixcode.ttf */,
 				A77285CD208D1DC400A75C1A /* Report.swift */,
 				A7A378CD208F4EC700F7D6A2 /* Tools.swift */,
 				942A15311FF81B0D00836235 /* Info.plist */,
@@ -644,7 +644,7 @@
 				A7906EC02073790300E1A8F3 /* FourthViewController.swift in Sources */,
 				A7C085322084D56B00A491CF /* IQTitleBarButtonItem.swift in Sources */,
 				A7A00734206AEEE100AD6914 /* AppDelegate.swift in Sources */,
-				A79E4E9F206D158E0017BE86 /* PilliPaevikDatabase.swift in Sources */,
+				A79E4E9F206D158E0017BE86 /* DiaryDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

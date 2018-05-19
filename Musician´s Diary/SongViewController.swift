@@ -10,20 +10,21 @@ import UIKit
 
 class SongViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate {
 
-    let algusaeg = 0
-    let pikkus = 1
-    let harjutuseKirjeldus = 3
+    let startTime = 0
+    let duration = 1
+    let practiceDescription = 3
     
 
-    var db = PilliPaevikDatabase.dbManager
+    var db = DiaryDatabase.dbManager
     var timeFormatter = DateComponentsFormatter()
     var chosenId:Int!
-    static var newHarjutusId:Int!
     var nameCell : TableViewCell2!
     var authorCell : TableViewCell2!
     var commentCell : TableViewCell2!
     var tableRowHeight : Int!
     var zeroCells = [IndexPath]()
+    
+    static var newPracticeId:Int!
     static var shouldAnimateFirstRow = false
     static var enteringFromLeft = true
     static var destroyPracticeId: Int? = nil
@@ -108,7 +109,7 @@ class SongViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         CATransaction.setAnimationTimingFunction(easeOutCirc)
         
         tableView4.beginUpdates()
-        let indexPath = IndexPath(row: db.tableNewRowPosition(table: db.harjutuskordTable, teosId: chosenId, newHarjutusId: SongViewController.newHarjutusId), section: 0)
+        let indexPath = IndexPath(row: db.tableNewRowPosition(table: db.practiceTable, targetSongId: chosenId, newPracticeId: SongViewController.newPracticeId), section: 0)
         tableView4.insertRows(at: [indexPath], with: .none)
         tableView4.endUpdates()
         
@@ -154,8 +155,8 @@ class SongViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if SongViewController.newHarjutusId != nil{
-            if indexPath.row == db.tableNewRowPosition(table: db.harjutuskordTable, teosId: chosenId, newHarjutusId: SongViewController.newHarjutusId) && SongViewController.shouldAnimateFirstRow {
+        if SongViewController.newPracticeId != nil{
+            if indexPath.row == db.tableNewRowPosition(table: db.practiceTable, targetSongId: chosenId, newPracticeId: SongViewController.newPracticeId) && SongViewController.shouldAnimateFirstRow {
                 prependPostWithAnimation()
                 animateIn(cell: cell, withDelay: 0.8)
                 SongViewController.shouldAnimateFirstRow = false
@@ -171,7 +172,7 @@ class SongViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             return 3
         }
         else{
-            return db.rowCountForId(targetId: chosenId, table: db.harjutuskordTable)
+            return db.rowCountForId(targetId: chosenId, table: db.practiceTable)
         }
     }
     
@@ -219,12 +220,12 @@ class SongViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         else{
             let cell = tableView4.dequeueReusableCell(withIdentifier: "customCell3") as!
             TableViewCell3
-            let order = db.tableOrderByDate(table: db.harjutuskordTable, teosId: chosenId)
-            var labels = db.selectHarjutuskordRow(pos: order[indexPath.row])
+            let order = db.tableOrderByDate(table: db.practiceTable, targetSongId: chosenId)
+            var labels = db.selectPracticeRow(pos: order[indexPath.row])
 
-            cell.titleLabel.text = labels[harjutuseKirjeldus]
-            cell.timeLabel.text = secToClock(sec: Double(labels[pikkus])!)
-            cell.dateLabel.text = labels[algusaeg]
+            cell.titleLabel.text = labels[practiceDescription]
+            cell.timeLabel.text = secToClock(sec: Double(labels[duration])!)
+            cell.dateLabel.text = labels[startTime]
             
             return cell;
         }
@@ -232,19 +233,19 @@ class SongViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     @objc func nameFieldChange(){
 
-        db.editTeosRow(targetId: chosenId, field: db.name, value: nameCell.textField1.text!)
+        db.editSongRow(targetId: chosenId, field: db.name, value: nameCell.textField1.text!)
         print("edited name")
         
     }
     @objc func authorFieldChange(){
         
-        db.editTeosRow(targetId: chosenId, field: db.author, value: authorCell.textField1.text!)
+        db.editSongRow(targetId: chosenId, field: db.author, value: authorCell.textField1.text!)
         print("edited author")
         
     }
     @objc func commentFieldChange(){
         
-        db.editTeosRow(targetId: chosenId, field: db.comment, value: commentCell.textField1.text!)
+        db.editSongRow(targetId: chosenId, field: db.comment, value: commentCell.textField1.text!)
         print("edited comment")
         
     }
@@ -290,7 +291,7 @@ class SongViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView4.beginUpdates()
         let id = SongViewController.destroyPracticeId!
         print("destroyId: \(id)")
-        let order = db.tableOrderByDate(table: db.harjutuskordTable, teosId: chosenId)
+        let order = db.tableOrderByDate(table: db.practiceTable, targetSongId: chosenId)
         print(order)
         for i in 0...order.count - 1 {
             if order[i] == id {
@@ -305,13 +306,13 @@ class SongViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewWillAppear(_ animated: Bool) {
         db.listTable()
-        let deletion = db.harjutuskordDeleteWhereDurationZero(teosId: chosenId)
+        let deletion = db.practiceDeleteWhereDurationZero(targetSongId: chosenId)
         print("deletion: \(deletion)")
         tableView4.reloadData()
         super.viewWillAppear(animated)
         /*
-        if SongViewController.newHarjutusId != nil && SongViewController.shouldAnimateFirstRow{
-            tableView4.insertRows(at: [IndexPath(row: db.tableNewRowPosition(table: db.harjutuskordTable, teosId: chosenId, newHarjutusId: SongViewController.newHarjutusId), section: 0)],
+        if SongViewController.newPracticeId != nil && SongViewController.shouldAnimateFirstRow{
+            tableView4.insertRows(at: [IndexPath(row: db.tableNewRowPosition(table: db.practiceTable, teosId: chosenId, newPracticeId: SongViewController.newPracticeId), section: 0)],
                                   with: .fade)
         }
  */
@@ -349,7 +350,7 @@ class SongViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         if let destination = segue.destination as? PracticeViewController{
             if tableView4.indexPathForSelectedRow != nil{
-                destination.harjutusId = db.returnHarjutusId(teosId: chosenId, pos: (tableView4.indexPathForSelectedRow?.row)!)
+                destination.harjutusId = db.returnPracticeId(targetSongId: chosenId, pos: (tableView4.indexPathForSelectedRow?.row)!)
             }
             else {
                 print("no cell selected")

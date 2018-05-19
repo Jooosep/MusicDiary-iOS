@@ -23,7 +23,7 @@ public class Teos: Comparable{
     var autor:String?;
     var kommentaar: String?;
     var hinnang: CShort?;
-    var lisatudpaevikusse: Date?;
+    var addedToDiary: Date?;
     var kasutusviis: CShort?;
     
     var harjutuskorrad = [Harjutuskord]()
@@ -45,19 +45,19 @@ public class Teos: Comparable{
         public static let COLUMN_NAME_AUTOR = "autor";
         public static let COLUMN_NAME_KOMMENTAAR = "kommentaar";
         public static let COLUMN_NAME_HINNANG = "hinnang";
-        public static let COLUMN_NAME_LISATUDPAEVIKUSSE = "lisatudpaevikusse";
+        public static let COLUMN_NAME_addedToDiary = "addedToDiary";
         public static let COLUMN_NAME_KASUTUSVIIS = "kasutusviis";
     }
     
     public init(){
         setKasutusviis(kasutusviis: 1);
-        setLisatudpaevikusse(lisatudpaevikusse : Date());
+        setaddedToDiary(addedToDiary : Date());
     }
     
     private func LoadHarjustuskorrad() {
         var harjutuskorrad = [Harjutuskord]();
         var harjutuskorradmap = [Int:Harjutuskord]();
-        //PilliPaevikDatabase mPPManager = new PilliPaevikDatabase(context);
+        //DiaryDatabase mPPManager = new DiaryDatabase(context);
         mPPManager.getAllHarjutuskorrad(this.id, this.Harjustuskorrad, this.Harjutuskorradmap);
     }
     
@@ -132,11 +132,11 @@ public class Teos: Comparable{
         this.hinnang = hinnang;
     }
     
-    public Date getLisatudpaevikusse() {
-        return lisatudpaevikusse;
+    public Date getaddedToDiary() {
+        return addedToDiary;
     }
-    public func setLisatudpaevikusse(lisatudpaevikusse : Date) {
-        self.lisatudpaevikusse = lisatudpaevikusse;
+    public func setaddedToDiary(addedToDiary : Date) {
+        self.addedToDiary = addedToDiary;
     }
     
     public short getKasutusviis() {
@@ -147,12 +147,12 @@ public class Teos: Comparable{
     }
     
     public void Salvesta(Context context){
-        PilliPaevikDatabase mPPManager = new PilliPaevikDatabase(context);
+        DiaryDatabase mPPManager = new DiaryDatabase(context);
         mPPManager.SalvestaTeos(this);
     }
     public void Kustuta(Context context){
         KustutaHarjutusteFailid(context);
-        PilliPaevikDatabase mPPManager = new PilliPaevikDatabase(context);
+        DiaryDatabase mPPManager = new DiaryDatabase(context);
         mPPManager.KustutaTeos(getId());
     }
     
@@ -167,6 +167,6 @@ public class Teos: Comparable{
     public String toString(){
         return "ID:" + id + "Nimi:" + this.nimi + " Autor:" + this.autor +
             " Kommentaar:" + this.kommentaar + " Hinnang:" + this.hinnang +
-            " Lisatud:" + this.lisatudpaevikusse + " Kasutusviis:" + this.kasutusviis;
+            " Lisatud:" + this.addedToDiary + " Kasutusviis:" + this.kasutusviis;
     }
 }

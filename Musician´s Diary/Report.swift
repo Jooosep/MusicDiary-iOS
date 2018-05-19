@@ -24,7 +24,7 @@ public class Report {
     var dailyGoalInt: Int!
     var minutesPracticed: Int!
     var dateFormatter = DateFormatter()
-    var db = PilliPaevikDatabase.dbManager
+    var db = DiaryDatabase.dbManager
     
     init(date: Date) {
         dateFormatter.dateFormat = "MMM yyyy"

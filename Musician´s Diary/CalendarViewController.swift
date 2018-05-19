@@ -10,7 +10,7 @@ import UIKit
 
 class CalendarViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    var db = PilliPaevikDatabase.dbManager
+    var db = DiaryDatabase.dbManager
     var date = Date()
     var dateFormatter = DateFormatter()
 

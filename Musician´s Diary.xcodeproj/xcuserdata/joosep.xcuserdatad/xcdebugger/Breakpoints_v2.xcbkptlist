@@ -153,7 +153,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
             endingLineNumber = "39"
-            landmarkName = "PilliPaevikDatabase"
+            landmarkName = "DiaryDatabase"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -169,7 +169,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
             endingLineNumber = "38"
-            landmarkName = "PilliPaevikDatabase"
+            landmarkName = "DiaryDatabase"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>

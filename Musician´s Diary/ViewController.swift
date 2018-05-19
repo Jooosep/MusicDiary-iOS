@@ -13,7 +13,7 @@ import SQLite
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
 
-    var db = PilliPaevikDatabase.dbManager
+    var db = DiaryDatabase.dbManager
     var idOrderTable = [Int]()
     var practiceCountTable = [Int]()
     var durationTable = [Int]()
@@ -115,8 +115,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("rows in table")
-        print(db.rowCount(table:db.teosTable))
-        return db.rowCount(table:db.teosTable)
+        print(db.rowCount(table:db.songTable))
+        return db.rowCount(table:db.songTable)
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -128,7 +128,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         if tableView == tableView1 {
             let cell = tableView1.dequeueReusableCell(withIdentifier: "customCell") as!
             TableViewCell1
-            cell.label.text = db.selectField(pos : idOrderTable[indexPath.row])[0]
+            cell.label.text = db.selectSongField(pos : idOrderTable[indexPath.row])[0]
             return cell;
         }
         else{
@@ -151,7 +151,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 destination.chosenId = idOrderTable[(tableView1.indexPathForSelectedRow?.row)!]
             }
             else {
-                destination.chosenId = db.newTeosRow()
+                destination.chosenId = db.newSongRow()
             }
         }
     }
@@ -245,11 +245,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 
         for i in 0...idOrderTable.count - 1 {
             if idOrderTable[i] == id {
-                print("row to delete from teosTable \(i)")
-                db.deleteTeosRow(teosId: id)
+                print("row to delete from songTable \(i)")
+                db.deleteSongRow(targetSongId: id)
                 tableView1.deleteRows(at: [IndexPath(row: i, section: 0)], with: .right)
                 tableView2.deleteRows(at: [IndexPath(row: i, section: 0)], with: .right)
-                let tableOrder = db.tableOrder(table: db.teosTable)
+                let tableOrder = db.songTableOrder()
                 idOrderTable = tableOrder[0]
                 practiceCountTable = tableOrder[1]
                 durationTable = tableOrder[2]
@@ -263,7 +263,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     override func viewWillAppear(_ animated: Bool) {
         SongViewController.enteringFromLeft = true
-        let tableOrder = db.tableOrder(table: db.teosTable)
+        let tableOrder = db.songTableOrder()
         idOrderTable = tableOrder[0]
         practiceCountTable = tableOrder[1]
         durationTable = tableOrder[2]
@@ -316,7 +316,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
         
         
-        let tableOrder = db.tableOrder(table: db.teosTable)
+        let tableOrder = db.songTableOrder()
         idOrderTable = tableOrder[0]
         practiceCountTable = tableOrder[1]
         durationTable = tableOrder[2]
@@ -381,23 +381,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         db.listTable()
     }
 
-
-    @IBAction func OnAlertSheetTapped(_ sender: Any) {
-        let sheet = UIAlertController(title:"my title",message:"my message",preferredStyle: .actionSheet);
-        let action1 = UIAlertAction(title: "my action",style:.cancel){(action)in
-            print("this is action 1")
-        };
-        let action2 = UIAlertAction(title: "clear table",style:.default){(action)in
-            self.db.clear_table()
-            DispatchQueue.main.async {
-                self.tableView1.reloadData()
-            }
-            
-        }
-        sheet.addAction(action1);
-        sheet.addAction(action2);
-        present(sheet,animated: true,completion: nil);
-    }
     
     @IBAction func sendReportButtonTapped(_ sender: UIButton) {
         let def = UserDefaults.standard

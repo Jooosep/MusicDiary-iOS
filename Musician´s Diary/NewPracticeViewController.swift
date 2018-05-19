@@ -12,10 +12,10 @@ import AVFoundation
 class NewPracticeViewController: UIViewController,AVAudioRecorderDelegate {
 
     //vars
-    var db = PilliPaevikDatabase.dbManager
+    var db = DiaryDatabase.dbManager
     
     var chosenId : Int!
-    var harjutusId : Int64!
+    var practiceId : Int64!
     
     var currentDate = Date()
     var endDate = Date()
@@ -59,10 +59,10 @@ class NewPracticeViewController: UIViewController,AVAudioRecorderDelegate {
             endDate = Date()
             if mikeOn {
                 recorder.stop()
-                db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate, filename: filename)
+                db.editPracticeTime(practiceId:practiceId, startTime: startDate, duration: seconds, endTime: endDate, filename: filename)
             }
             else {
-                db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate)
+                db.editPracticeTime(practiceId:practiceId, startTime: startDate, duration: seconds, endTime: endDate)
             }
             UIView.transition(with : startStopButton, duration : 0.5, options : .transitionCrossDissolve,animations: {self.startStopButton.setTitle("START", for: .normal)},completion : nil)
             print("stopped recording")
@@ -74,7 +74,7 @@ class NewPracticeViewController: UIViewController,AVAudioRecorderDelegate {
     }
     
     @IBAction func descriptionChanged(_ sender: Any) {
-        db.editHarjutuskordDescription(practiceId : harjutusId, description: practiceDescription.text!)
+        db.editPracticeDescription(practiceId : practiceId, description: practiceDescription.text!)
     }
     @IBAction func mikeTapped(_ sender: Any) {
         if mikeOn {
@@ -145,10 +145,10 @@ class NewPracticeViewController: UIViewController,AVAudioRecorderDelegate {
             isTimerRunning = false
             endDate = Date()
             if mikeOn {
-                db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate, filename: filename)
+                db.editPracticeTime(practiceId:practiceId, startTime: startDate, duration: seconds, endTime: endDate, filename: filename)
             }
             else {
-                db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: seconds, endTime: endDate)
+                db.editPracticeTime(practiceId:practiceId, startTime: startDate, duration: seconds, endTime: endDate)
             }
             print(seconds)
             print("edited duration")
@@ -162,9 +162,9 @@ class NewPracticeViewController: UIViewController,AVAudioRecorderDelegate {
     }
     
     override func viewDidLoad() {
-        harjutusId = db.newHarjutuskordRow(teosId: chosenId)
+        practiceId = db.newPracticeRow(newId: chosenId)
         print(dateString())
-        filename = "\(chosenId!)\(harjutusId!)\(dateString()).m4a"
+        filename = "\(chosenId!)\(practiceId!)\(dateString()).m4a"
         print(filename)
         let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
         let audioDirectoryPath = documentDirectoryPath?.appending("/recordings")
@@ -176,7 +176,7 @@ class NewPracticeViewController: UIViewController,AVAudioRecorderDelegate {
         tapper.cancelsTouchesInView = false
         print("chosenId: ")
         print(chosenId)
-        SongViewController.newHarjutusId = Int(harjutusId)
+        SongViewController.newPracticeId = Int(practiceId)
         print("created new harjutuskord row")
         startStopButton.layer.cornerRadius = 10;
         mikeButton.layer.cornerRadius = 10;

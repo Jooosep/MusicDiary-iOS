@@ -22,7 +22,7 @@ class AddPracticeViewController: UIViewController,UIPickerViewDataSource,UIPicke
     
     
     //vars
-    var db = PilliPaevikDatabase.dbManager
+    var db = DiaryDatabase.dbManager
     
     var chosenId : Int!
     var harjutusId : Int64!
@@ -53,7 +53,7 @@ class AddPracticeViewController: UIViewController,UIPickerViewDataSource,UIPicke
     
     //MARK:IBActions
     @IBAction func descriptionChanged(_ sender: Any) {
-        db.editHarjutuskordDescription(practiceId : harjutusId, description: practiceDescription.text!)
+        db.editPracticeDescription(practiceId : harjutusId, description: practiceDescription.text!)
     }
     
     @IBAction func startTimePickerTapped(_ sender: Any) {
@@ -159,7 +159,7 @@ class AddPracticeViewController: UIViewController,UIPickerViewDataSource,UIPicke
             self.backGroundButton.alpha = 0
             
         })
-        db.editHarjutuskordTime(practiceId:harjutusId, startTime: startDate, duration: (pickerMax)*60, endTime: endDate)
+        db.editPracticeTime(practiceId:harjutusId, startTime: startDate, duration: (pickerMax)*60, endTime: endDate)
         print("edited duration")
         print(Int((durationPicker.titleLabel?.text)!)!*60)
     }
@@ -210,8 +210,8 @@ class AddPracticeViewController: UIViewController,UIPickerViewDataSource,UIPicke
         tapper.cancelsTouchesInView = false
         print("chosenId: ")
         print(chosenId)
-        harjutusId = db.newPracticeRow(teosId: chosenId)
-        SongViewController.newHarjutusId = Int(harjutusId)
+        harjutusId = db.newPracticeRow(newId: chosenId)
+        SongViewController.newPracticeId = Int(harjutusId)
         print("created new harjutuskord row")
         
         alert.addAction(dismiss);
